@@ -1,5 +1,4 @@
-﻿################################################################################
-# Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
-################################################################################
-
-/.vs
+﻿/.vs
+/Server/.vs/Server
+/Server/Server/obj
+/Server/Server/bin
