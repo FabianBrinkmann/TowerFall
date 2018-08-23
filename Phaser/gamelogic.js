@@ -176,22 +176,6 @@ function update ()
         right = true;
         left = false;
     }
-    else if (Phaser.Input.Keyboard.JustDown(cursors.space) && !justShot)
-    {
-      if (left)
-      {
-        shootArrow(player, 'arrowLeft');
-      }
-      else if (right)
-      {
-          shootArrow(player, 'arrowRight');
-      }
-
-      justShot = true;
-      setTimeout( () => {
-        justShot = false
-      }, 500);
-    }
     else
     {
         if (right)
@@ -211,6 +195,20 @@ function update ()
         //player.anims.play('turn');
     }
 
+    if (Phaser.Input.Keyboard.JustDown(cursors.space) && !justShot)
+    {
+      if (left)
+      {
+        shootArrow(player, 'arrowLeft');
+        justShotTimer();
+      }
+      else if (right)
+      {
+          shootArrow(player, 'arrowRight');
+          justShotTimer();
+      }
+    }
+
     if (cursors.up.isDown && player.body.touching.down)
     {
         player.setVelocityY(-330);
@@ -218,6 +216,13 @@ function update ()
     text1.text = 'Fritz ' + player.arrows;
     text1.updateText();
     text1 = Phaser.Display.Align.To.TopCenter(text1, player, 0, 0);
+}
+
+function justShotTimer(){
+  justShot = true;
+  setTimeout( () => {
+    justShot = false
+  }, 500);
 }
 
 function shootArrow(shootingPlayer, imageName)
