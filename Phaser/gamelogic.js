@@ -63,10 +63,12 @@ function create ()
 
     //  Now let's create some ledges
     platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
-    platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
+    platforms.create(50, 250, 'ground').setScale(1, 0.25).refreshBody();
+    var y = platforms.create(750, 220, 'ground');
+    var t = platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
     platforms.create(830, 400, 'wand').setScale(2).refreshBody();
+    console.log(y);
+    console.log(t);
     right = false;
     left = false;
 
@@ -176,22 +178,6 @@ function update ()
         right = true;
         left = false;
     }
-    else if (Phaser.Input.Keyboard.JustDown(cursors.space) && !justShot)
-    {
-      if (left)
-      {
-        shootArrow(player, 'arrowLeft');
-      }
-      else if (right)
-      {
-          shootArrow(player, 'arrowRight');
-      }
-
-      justShot = true;
-      setTimeout( () => {
-        justShot = false
-      }, 500);
-    }
     else
     {
         if (right)
@@ -211,6 +197,20 @@ function update ()
         //player.anims.play('turn');
     }
 
+    if (Phaser.Input.Keyboard.JustDown(cursors.space) && !justShot)
+    {
+      if (left)
+      {
+        shootArrow(player, 'arrowLeft');
+        justShotTimer();
+      }
+      else if (right)
+      {
+          shootArrow(player, 'arrowRight');
+          justShotTimer();
+      }
+    }
+
     if (cursors.up.isDown && player.body.touching.down)
     {
         player.setVelocityY(-330);
@@ -218,6 +218,13 @@ function update ()
     text1.text = 'Fritz ' + player.arrows;
     text1.updateText();
     text1 = Phaser.Display.Align.To.TopCenter(text1, player, 0, 0);
+}
+
+function justShotTimer(){
+  justShot = true;
+  setTimeout( () => {
+    justShot = false
+  }, 500);
 }
 
 function shootArrow(shootingPlayer, imageName)
@@ -245,7 +252,7 @@ function shootArrow(shootingPlayer, imageName)
       arrow.setVelocity(-500, -80);//-400
       Phaser.Display.Align.To.LeftCenter(arrow, player, 0, 10);
     }
-    console.log(arrow.body.velocity);
+    //console.log(arrow.body.velocity);
   }
 }
 
