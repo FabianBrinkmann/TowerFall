@@ -63,10 +63,12 @@ function create ()
 
     //  Now let's create some ledges
     platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
-    platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
+    platforms.create(50, 250, 'ground').setScale(1, 0.25).refreshBody();
+    var y = platforms.create(750, 220, 'ground');
+    var t = platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
     platforms.create(830, 400, 'wand').setScale(2).refreshBody();
+    console.log(y);
+    console.log(t);
     right = false;
     left = false;
 
@@ -250,7 +252,7 @@ function shootArrow(shootingPlayer, imageName)
       arrow.setVelocity(-500, -80);//-400
       Phaser.Display.Align.To.LeftCenter(arrow, player, 0, 10);
     }
-    console.log(arrow.body.velocity);
+    //console.log(arrow.body.velocity);
   }
 }
 
