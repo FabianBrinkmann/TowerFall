@@ -65,8 +65,8 @@ function create ()
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
     platforms.create(750, 220, 'ground');
-    platforms.create(750, 220, 'ground').;
-    platforms.create(32, 400, 'wand');
+    platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
+    platforms.create(830, 400, 'wand').setScale(2).refreshBody();
     right = false;
     left = false;
 
@@ -233,16 +233,16 @@ function shootArrow(shootingPlayer, imageName)
     //arrow.rotation = -50;
     //arrow.angularVelocity = -10;
     arrow.body.setGravity(0, 0);
-    arrow.on('', arrowCollide)
+    //arrow.on('', arrowCollide)
 
     switch (imageName)
     {
       case 'arrowRight':
-      arrow.setVelocity(400, -10);
+      arrow.setVelocity(500, -80);
       Phaser.Display.Align.To.RightCenter(arrow, shootingPlayer, 0, 10);
         break;
       default:
-      arrow.setVelocity(-10, -10);//-400
+      arrow.setVelocity(-500, -80);//-400
       Phaser.Display.Align.To.LeftCenter(arrow, player, 0, 10);
     }
     console.log(arrow.body.velocity);
@@ -254,7 +254,6 @@ function arrowCollide(platform, collidedArrow)
   collidedArrow.setVelocity(0, 0);
   collidedArrow.colided = true;
   collidedArrow.body.allowGravity = false;
-  arrow.allowGravity = false;
 }
 
 function collectStar (player, star)
