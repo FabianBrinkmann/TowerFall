@@ -34,13 +34,25 @@ var right;
 var left;
 var justShot = false;
 
+var gameWidth = 800
+var gameHeight = 600
+var groundWidth = 800
+var groundHeight = 24
+var wallWidth = 24
+var wallHeight = 600
+var platformWidth = 200
+var platformHeight = 14
+
 var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('wand', 'assets/wand.png');
+    // map graphics
+    this.load.image('wall', 'assets/wall.png');
+    this.load.image('ground', 'assets/ground.png');
+    this.load.image('platform', 'assets/platform.png');
     this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
+
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.image('arrowUp', 'assets/arrowUp.png');
