@@ -1,4 +1,4 @@
-﻿#Server API-Endpoints
+﻿# Server API-Endpoints
 
 **Register**
 * URL 
@@ -11,6 +11,7 @@
       Content: { token: 'tokenvalue'}
   * Error
     * Code: 401
-      Content: '''
-                   { errorcode: 1, error: 'Username already used'}
-               '''
+      Content: 
+		'''
+          { errorcode: 1, error: 'Username already used'}
+      '''
