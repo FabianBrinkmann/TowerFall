@@ -54,7 +54,7 @@ namespace Server
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetRequiredService<TowerfallContext>();
-                db.Database.EnsureCreated();
+				db.Database.Migrate();
             }
         }
     }

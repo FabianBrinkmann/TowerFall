@@ -38,8 +38,9 @@ namespace Server.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login( [FromBody] Account account )
 		{
-			//TODO Loginfunktion
-			return null;
+			if ( !_context.Accounts.Validate( account ) )
+				return Unauthorized();
+			return Ok(); //TODO return token
 		}
 
 		[Route( "register" )]
@@ -50,7 +51,9 @@ namespace Server.Controllers
 			if ( !_context.Accounts.UsernameExists( account.User ) )
 				_context.Accounts.AddAccount( account, SALT_LENGTH );
 			await _context.SaveChangesAsync();
-			return null;
+			return Ok(); 
+			//TODO return token
+			//TODO validate
 		}
 	}
 }

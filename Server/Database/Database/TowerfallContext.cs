@@ -24,7 +24,6 @@ namespace Database.Database
             modelBuilder.ApplyConfiguration(new AccountConfiguration());
             modelBuilder.ApplyConfiguration(new CharacterConfiguration());
 
-
             base.OnModelCreating(modelBuilder);
         }
     }

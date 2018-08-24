@@ -17,7 +17,7 @@ namespace Database.Database.Extensions
 			{
 				User = account.User,
 				Salt = salt,
-				Hash = SHA256Utility.ComputeHash( account.User + salt )
+				Hash = SHA256Utility.ComputeHash( account.Password + salt )
 			};
 			dbset.Add( hashedPWAccount );
 		}
@@ -25,6 +25,16 @@ namespace Database.Database.Extensions
 		public static bool UsernameExists( this DbSet<HashedPWAccount> dbset, string userName )
 		{
 			return dbset.Find( userName ) != null;
+		}
+
+		public static bool Validate(this DbSet<HashedPWAccount> dbset, Account account )
+		{
+			var savedUser = dbset.Find( account.User );
+			if ( savedUser == null )
+				return false;
+			var salt = savedUser.Salt;
+			var hash = SHA256Utility.ComputeHash( account.Password + salt );
+			return hash == savedUser.Hash;
 		}
 	}
 }
