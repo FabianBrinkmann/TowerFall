@@ -88,17 +88,6 @@ function create ()
 
 
 
-    //  Now let's create some ledges
-<<<<<<< HEAD
-    platforms.create(600, 380, 'ground').setScale(1, 0.25).refreshBody();;
-    platforms.create(50, 250, 'ground').setScale(1, 0.25).refreshBody();
-    var y = platforms.create(750, 220, 'ground').setScale(1, 0.25).refreshBody();;
-    var t = platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
-    platforms.create(830, 400, 'wand').setScale(2).refreshBody();
-    console.log(y.texture.key);
-    console.log(platforms);
-=======
->>>>>>> master
     right = false;
     left = false;
 
@@ -186,7 +175,7 @@ function platformCollideWithPlayer (player, platform)
 {
   //console.log(platform.texture.key == 'ground');
   //console.log(player.body.touching);
-  if (platform.texture.key == 'ground' && platform.body.touching.down)
+  if (platform.texture.key == 'platform' && platform.body.touching.down)
   {
     console.log('t');
     this.physics.world.removeCollider(platformPlayerCollider);
@@ -199,7 +188,7 @@ function platformCollideWithPlayer (player, platform)
 function collideInvoker (player, platform)
 {
   var result = true;
-  if (platform.texture.key == 'ground' && player.body.velocity.y < 0)
+  if (platform.texture.key == 'platform' && player.body.velocity.y < 0)
   {
     result = false;
   }
