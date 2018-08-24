@@ -2,3 +2,5 @@
 /Server/.vs/Server
 /Server/Server/obj
 /Server/Server/bin
+.DS_Store
+/Phaser/.DS_Store
