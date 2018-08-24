@@ -2,3 +2,14 @@
 /Server/.vs/Server
 /Server/Server/obj
 /Server/Server/bin
+/Server/.vs/config
+/Server/Database/bin/Debug/netcoreapp2.1
+/Server/Database/obj
+/Server/Entities/bin/Debug/netcoreapp2.1
+/Server/Entities/obj
+/Server/Server/dockerfile
+/Server/Utility/bin/Debug/netcoreapp2.1
+/Server/Utility/obj
+*.user
+.DS_Store
+/Phaser/.DS_Store

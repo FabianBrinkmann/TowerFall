@@ -34,13 +34,25 @@ var right;
 var left;
 var justShot = false;
 
+var gameWidth = 800
+var gameHeight = 600
+var groundWidth = 800
+var groundHeight = 24
+var wallWidth = 24
+var wallHeight = 600
+var platformWidth = 200
+var platformHeight = 14
+
 var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('wand', 'assets/wand.png');
+    // map graphics
+    this.load.image('wall', 'assets/wall.png');
+    this.load.image('ground', 'assets/ground.png');
+    this.load.image('platform', 'assets/platform.png');
     this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
+
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.image('arrowUp', 'assets/arrowUp.png');
@@ -57,18 +69,25 @@ function create ()
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
 
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    //  Here we create the ground and the top.
+    platforms.create(groundWidth / 2, gameHeight - (groundHeight / 2), 'ground');
+    platforms.create(groundWidth / 2, groundHeight / 2, 'ground');
+
+    //  Here we create the left and right wall
+    platforms.create(wallWidth / 2, gameHeight - (wallHeight / 2), 'wall');
+    platforms.create(gameWidth  - (wallWidth / 2), gameHeight - (wallHeight / 2), 'wall');
+
+    //  Here we create the plaforms
+    //  left
+    platforms.create((platformWidth / 2) + 100, gameHeight - 180, 'platform');
+    //  right
+    platforms.create((gameWidth - platformWidth / 2) - 100, gameHeight - 180, 'platform');
+    //  top
+    platforms.create(gameWidth / 2, gameHeight - 350, 'platform');
+
+
 
     //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground').setScale(1, 0.25).refreshBody();
-    var y = platforms.create(750, 220, 'ground');
-    var t = platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
-    platforms.create(830, 400, 'wand').setScale(2).refreshBody();
-    console.log(y);
-    console.log(t);
     right = false;
     left = false;
 
