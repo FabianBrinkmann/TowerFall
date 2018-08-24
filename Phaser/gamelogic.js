@@ -33,6 +33,7 @@ var text1;
 var right;
 var left;
 var justShot = false;
+var platformPlayerCollider;
 
 var game = new Phaser.Game(config);
 
@@ -62,18 +63,19 @@ function create ()
     platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
     //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
+    platforms.create(600, 380, 'ground').setScale(1, 0.25).refreshBody();;
     platforms.create(50, 250, 'ground').setScale(1, 0.25).refreshBody();
-    var y = platforms.create(750, 220, 'ground');
+    var y = platforms.create(750, 220, 'ground').setScale(1, 0.25).refreshBody();;
     var t = platforms.create(-30, 400, 'wand').setScale(2).refreshBody();
     platforms.create(830, 400, 'wand').setScale(2).refreshBody();
-    console.log(y);
-    console.log(t);
+    console.log(y.texture.key);
+    console.log(platforms);
     right = false;
     left = false;
 
     // The player and its settings
     player = this.physics.add.sprite(100, 450, 'dude');
+    console.log(player);
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
     text1 = this.add.text(16, 16, 'Fritz 3', style);
     text1 = Phaser.Display.Align.To.TopCenter(text1, player, 0, 0);
@@ -82,6 +84,7 @@ function create ()
     player.setBounce(0);
     player.arrows = 3;
     player.setCollideWorldBounds(true);
+    player.body.overlapY = 16;
 
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
@@ -120,18 +123,18 @@ function create ()
     cursors = this.input.keyboard.createCursorKeys();
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
-    stars = this.physics.add.group({
-        key: 'star',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
-    });
+    //stars = this.physics.add.group({
+    //    key: 'star',
+    //    repeat: 11,
+    //    setXY: { x: 12, y: 0, stepX: 70 }
+    //});
 
-    stars.children.iterate(function (child) {
+    //stars.children.iterate(function (child) {
 
         //  Give each star a slightly different bounce
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    //    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
 
-    });
+    //});
 
     arrows = this.physics.add.group();
 
@@ -139,15 +142,39 @@ function create ()
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     //  Collide the player and the stars with the platforms
-    this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
+    platformPlayerCollider = this.physics.add.collider(player, platforms, null, collideInvoker, this);
+    //this.physics.add.collider(stars, platforms);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.overlap(player, stars, collectStar, null, this);
+    //this.physics.add.overlap(player, stars, collectStar, null, this);
 
     this.physics.add.collider(player, arrows, hitArrow, null, this);
     this.physics.add.collider(platforms, arrows, arrowCollide, null, this);
 
+}
+
+function platformCollideWithPlayer (player, platform)
+{
+  //console.log(platform.texture.key == 'ground');
+  //console.log(player.body.touching);
+  if (platform.texture.key == 'ground' && platform.body.touching.down)
+  {
+    console.log('t');
+    this.physics.world.removeCollider(platformPlayerCollider);
+    setTimeout( () => {
+      //platformPlayerCollider = this.physics.add.collider(player, platforms, platformCollideWithPlayer, null, this);
+    }, 50000);
+  }
+}
+
+function collideInvoker (player, platform)
+{
+  var result = true;
+  if (platform.texture.key == 'ground' && player.body.velocity.y < 0)
+  {
+    result = false;
+  }
+  return result;
 }
 
 function handler (gameObject)
@@ -227,6 +254,9 @@ function justShotTimer(){
   }, 500);
 }
 
+//Erstellt einen Pfeil und schießt ihn ab.
+//shootingPlayer = der Spieler der schießt.
+//imageName = das Bild das für den Pfeil benutzt werden soll.
 function shootArrow(shootingPlayer, imageName)
 {
   if(player.arrows > 0)
@@ -256,6 +286,9 @@ function shootArrow(shootingPlayer, imageName)
   }
 }
 
+//Wird ausgelöst wenn ein Pfeil auf eine Platform trifft.
+//platform = die Platform die getroffen wurde.
+//collidedArrow = der Pfeil der die Platform trifft.
 function arrowCollide(platform, collidedArrow)
 {
   collidedArrow.setVelocity(0, 0);
@@ -263,34 +296,37 @@ function arrowCollide(platform, collidedArrow)
   collidedArrow.body.allowGravity = false;
 }
 
-function collectStar (player, star)
-{
-    star.disableBody(true, true);
+//function collectStar (player, star)
+//{
+//
+//    //  Add and update the score
+//    score += 10;
+//    scoreText.setText('Score: ' + score);
+//
+//    if (stars.countActive(true) === 0)
+//    {
+//        //  A new batch of stars to collect
+//        stars.children.iterate(function (child) {
+//
+//            child.enableBody(true, child.x, 0, true, true);
+//
+//        });
+//
+//        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+//
+//        var arrow = arrows.create(x, 16, 'bomb');
+//        arrow.setBounce(0);
+//        arrow.setCollideWorldBounds(true);
+//        arrow.setVelocity(Phaser.Math.Between(-200, 200), 20);
+//        arrow.allowGravity = false;
+//
+//    }
+//}
 
-    //  Add and update the score
-    score += 10;
-    scoreText.setText('Score: ' + score);
-
-    if (stars.countActive(true) === 0)
-    {
-        //  A new batch of stars to collect
-        stars.children.iterate(function (child) {
-
-            child.enableBody(true, child.x, 0, true, true);
-
-        });
-
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-        var arrow = arrows.create(x, 16, 'bomb');
-        arrow.setBounce(0);
-        arrow.setCollideWorldBounds(true);
-        arrow.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        arrow.allowGravity = false;
-
-    }
-}
-
+//Wird ausgelöst wenn ein Spieler einen Pfeil berührt.
+//Wenn der Pfeil noch in bewegung ist stirbt der Spieler und wenn er liegt sammelt er ihn auf.
+//player = der Spieler der den Pfeil berührt.
+//arrow = der Pfeil der den Spieler berührt.
 function hitArrow (player, arrow)
 {
   if(arrow.colided)
