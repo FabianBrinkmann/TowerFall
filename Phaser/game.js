@@ -50,14 +50,14 @@ function preload ()
 function create (){
 
     // Create the level
-    platforms=createLevel(this);S
+    platforms=createLevel(this);
 
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
     ammo = this.physics.add.group();
     var playerCursors = new Array(
-    new Array(cursors.left, cursors.right, cursors.up, cursors.space),
-    new Array(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
+    new Array(cursors.left, cursors.right, cursors.up, cursors.space),//65 ist der Key von A
+    new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
     //new Array(cursors.a, cursors.d, cursors.w, cursors.s)
     );
     playerList = new Array(null, null, null);
