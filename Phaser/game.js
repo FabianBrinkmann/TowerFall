@@ -20,9 +20,11 @@ var config = {
     }
 };
 
+var playerList;
 var platforms;
 var cursors;
 var playerOne;
+var playerTwo;
 var ammo;
 var gameOver = false;
 var justShot = false;
@@ -48,21 +50,30 @@ function preload ()
 function create (){
 
     // Create the level
-    platforms=createLevel(this);
-
-    //Creates Player One
-    playerOne=createPlayer(this, 1);
+    platforms=createLevel(this);S
 
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
-
     ammo = this.physics.add.group();
-
+    var playerCursors = new Array(
+    new Array(cursors.left, cursors.right, cursors.up, cursors.space),
+    new Array(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
+    //new Array(cursors.a, cursors.d, cursors.w, cursors.s)
+    );
+    playerList = new Array(null, null, null);
+    var i;
+    for (i = 0; i < 2; i++) {
+      playerList[i] = createPlayer(this, 1+i);
+      playerList[i].cursorLeft = playerCursors[i][0];
+      playerList[i].cursorRight = playerCursors[i][1];
+      playerList[i].cursorUp = playerCursors[i][2];
+      playerList[i].cursorShoot= playerCursors[i][3];
+      this.physics.add.collider(playerList[i], platforms, null, collideInvokerPlayerPlatform, this);
+      this.physics.add.collider(playerList[i], ammo, hitAmmo, null, this);
+    }
     //  Collide the player with the platforms
-    this.physics.add.collider(playerOne, platforms, null, collideInvokerPlayerPlatform, this);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.collider(playerOne, ammo, hitAmmo, null, this);
     this.physics.add.collider(platforms, ammo, ammoCollide, null, this);
 
 }
@@ -75,17 +86,20 @@ function update ()
         return;
     }
 
-    updatePlayer(playerOne);
+    var i;
+    for (i = 0; i < 2; i++) {
+      updatePlayer(playerList[i]);
+    }
 
 }
 
 //Wird ausgelöst wenn ein Spieler eine Platform berührt.
 //player = der Spieler
 //platform = die Platform
-function collideInvokerPlayerPlatform (playerOne, platform)
+function collideInvokerPlayerPlatform (player, platform)
 {
     var result = true;
-    if (platform.texture.key == 'platform' && playerOne.body.velocity.y < 0)
+    if (platform.texture.key == 'platform' && player.body.velocity.y < 0)
     {
         result = false;
     }

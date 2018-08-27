@@ -1,9 +1,4 @@
-var right;
-var left;
-
 function createPlayer(game, playerNumber) {
-    right = false;
-    left = false;
     var player;
     if (playerNumber===1) {
         player = game.physics.add.sprite(200, 450, 'dude');
@@ -17,7 +12,6 @@ function createPlayer(game, playerNumber) {
     player.ammo = 3;
     player.setCollideWorldBounds(true);
     player.body.overlapY = 16;
-
 
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
@@ -73,56 +67,54 @@ function createPlayer(game, playerNumber) {
 function updatePlayer(player) {
 
 
-    if (cursors.left.isDown)
+    if (player.cursorLeft.isDown)
     {
         player.setVelocityX(-160);
 
         player.anims.play('left', true);
-        left = true;
-        right = false;
+        player.left = true;
+        player.right = false;
     }
-    else if (cursors.right.isDown)
+    else if (player.cursorRight.isDown)
     {
         player.setVelocityX(160);
 
         player.anims.play('right', true);
-        right = true;
-        left = false;
+        player.right = true;
+        player.left = false;
     }
     else
     {
-        if (right)
+        if (player.right)
         {
             player.anims.play('lookRight', true);
         }
-        else if (left)
+        else if (player.left)
         {
             player.anims.play('lookLeft', true);
         }
         else {
-            {
-                player.anims.play('turn', true);
-            }
+            player.anims.play('turn', true);
         }
         player.setVelocityX(0);
         //player.anims.play('turn');
     }
 
-    if (Phaser.Input.Keyboard.JustDown(cursors.space) && !justShot)
+    if (player.cursorShoot.isDown && !justShot)
     {
-        if (left)
+        if (player.left)
         {
             shoot(player, 'arrowLeft');
             justShotTimer();
         }
-        else if (right)
+        else if (player.right)
         {
             shoot(player, 'arrowRight');
             justShotTimer();
         }
     }
 
-    if (cursors.up.isDown && player.body.touching.down)
+    if (player.cursorUp.isDown && player.body.touching.down)
     {
         player.setVelocityY(-330);
     }
@@ -131,4 +123,3 @@ function updatePlayer(player) {
     player.playerText = Phaser.Display.Align.To.TopCenter(player.playerText, player, 0, 0);
 
 }
-

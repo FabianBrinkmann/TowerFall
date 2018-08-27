@@ -6,7 +6,7 @@ function shoot(shootingPlayer, imageName)
 {
     if(shootingPlayer.ammo > 0)
     {
-        playerOne.ammo += - 1;
+        shootingPlayer.ammo += - 1;
         var arrow = ammo.create(16, 16, imageName);
         arrow.setBounce(0);
         arrow.setCollideWorldBounds(true);
@@ -25,7 +25,7 @@ function shoot(shootingPlayer, imageName)
                 break;
             default:
                 arrow.setVelocity(-500, -80);//-400
-                Phaser.Display.Align.To.LeftCenter(arrow, playerOne, 0, 10);
+                Phaser.Display.Align.To.LeftCenter(arrow, shootingPlayer, 0, 10);
         }
         //console.log(arrow.body.velocity);
     }
