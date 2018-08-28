@@ -69,7 +69,7 @@ function updatePlayer(player) {
 
     if (player.cursorLeft.isDown)
     {
-        player.setVelocityX(-160);
+        player.setVelocityX(-250);
 
         player.anims.play('left', true);
         player.left = true;
@@ -77,7 +77,7 @@ function updatePlayer(player) {
     }
     else if (player.cursorRight.isDown)
     {
-        player.setVelocityX(160);
+        player.setVelocityX(250);
 
         player.anims.play('right', true);
         player.right = true;
