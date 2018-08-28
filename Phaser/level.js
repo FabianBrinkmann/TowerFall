@@ -10,7 +10,7 @@ var platformHeight = 14
 function createLevel(game) {
     var platforms
     //  A simple background for our game
-    game.add.image(400, 300, 'sky');
+    game.add.image(400, 300, 'background');
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.physics.add.staticGroup();
 
