@@ -16,6 +16,7 @@ function shoot(shootingPlayer, imageName)
         //arrow.angularVelocity = -10;
         arrow.body.setGravity(0, 0);
         //arrow.on('', ammoCollide)
+        arrow.player = shootingPlayer;
 
         switch (imageName)
         {
@@ -24,17 +25,17 @@ function shoot(shootingPlayer, imageName)
                 Phaser.Display.Align.To.RightCenter(arrow, shootingPlayer, 0, 10);
                 break;
             default:
-                arrow.setVelocity(-500, -80);//-400
+                arrow.setVelocity(-500, -80);
                 Phaser.Display.Align.To.LeftCenter(arrow, shootingPlayer, 0, 10);
         }
         //console.log(arrow.body.velocity);
     }
 }
 
-function justShotTimer(){
-    justShot = true;
+function justShotTimer(player){
+    player.justShot = true;
     setTimeout( () => {
-        justShot = false
+        player.justShot = false
     }, 500);
 }
 
@@ -69,4 +70,10 @@ function hitAmmo (player, ammo)
 
         gameOver = true;
     }
+}
+
+function ammoInPlatform (platform, arrow)
+{
+  arrow.destroy();
+  arrow.player.ammo += 1;
 }

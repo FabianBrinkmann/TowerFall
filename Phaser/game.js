@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 700,
     physics: {
         default: 'arcade',
         arcade: {
@@ -23,11 +23,8 @@ var config = {
 var playerList;
 var platforms;
 var cursors;
-var playerOne;
-var playerTwo;
 var ammo;
 var gameOver = false;
-var justShot = false;
 
 var game = new Phaser.Game(config);
 
@@ -75,6 +72,7 @@ function create (){
     //  Collide the player with the platforms
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+    this.physics.add.overlap(platforms, ammo, ammoInPlatform, null, this);
     this.physics.add.collider(platforms, ammo, ammoCollide, null, this);
 
 }
