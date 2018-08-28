@@ -28,6 +28,7 @@ var playerTwo;
 var ammo;
 var gameOver = false;
 var justShot = false;
+var platforms;
 
 var game = new Phaser.Game(config);
 
@@ -44,14 +45,22 @@ function preload ()
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
     this.load.image('arrowRight', 'assets/arrowRight.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+    // this.load.image('tileset', 'assets/map/tileset.png');
+    // this.load.tilemap('world1', 'assets/map/world1.csv');
+    this.load.image('tiles', 'assets/map/tileset.png');
+    this.load.tilemapTiledJSON('map', 'assets/map/tilemap.json');
+
 }
 
 //Erstellt die Umgebung und weiteres.
 function create (){
 
     // Create the level
-    platforms=createLevel(this);
-
+    platforms = this.make.tilemap('map');
+    var tileset = platforms.addTilesetImage('tiles_spritesheet', 'tiles');
+    this.backgroundLayer = platforms.createStaticLayer('backgroundLayer', tileset);
+    this.cameras.main.setBounds(0, 0, platforms.widthInPixels, platforms.heightInPixels);
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
     ammo = this.physics.add.group();
