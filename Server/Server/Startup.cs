@@ -38,27 +38,25 @@ namespace Server
 			switch ( dbProvider.ToLower() )
 			{ 
 				case "sqlite":
-					ConfigureEntityFrameworkSQLite( services );
+					ConfigureEntityFrameworkSQLite( services, connection );
 					break;
 				case "mssql":
-					ConfigureEntityFrameworkMSSQL( services );
+					ConfigureEntityFrameworkMSSQL( services, connection );
 					break;
 				default:
-					ConfigureEntityFrameworkSQLite( services ); // no dependency to extern databaseservice
+					ConfigureEntityFrameworkSQLite( services, connection ); // no dependency to extern databaseservice
 					break;
 			}
 		}
 
-		private static void ConfigureEntityFrameworkMSSQL( IServiceCollection services )
+		private static void ConfigureEntityFrameworkMSSQL( IServiceCollection services, string connectionString )
 		{
-			var connection = @"Data Source=.\SQLExpress;Initial Catalog=Towerfall;Integrated Security=True;MultipleActiveResultSets=True;Application Name=Towerfall;Min Pool Size=3;";
-			services.AddDbContext<TowerfallContext>( options => options.UseSqlServer( connection ) );
+			services.AddDbContext<TowerfallContext>( options => options.UseSqlServer( connectionString ) );
 		}
 
-		private static void ConfigureEntityFrameworkSQLite( IServiceCollection services )
+		private static void ConfigureEntityFrameworkSQLite( IServiceCollection services, string ConnectionString )
 		{
-			var connection = @"Filename=./towerfall.db";
-			services.AddDbContext<TowerfallContext>( options => options.UseSqlite( connection ) );
+			services.AddDbContext<TowerfallContext>( options => options.UseSqlite( ConnectionString ) );
 		}
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure( IApplicationBuilder app, IHostingEnvironment env )
