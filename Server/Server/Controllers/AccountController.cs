@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Entities.Models;
 using Utility.Hash;
 using Database.Database.Extensions;
+using System.Net;
+using Server.Models;
 
 namespace Server.Controllers
 {
@@ -38,7 +40,7 @@ namespace Server.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login( [FromBody] Account account )
 		{
-			if ( !_context.Accounts.Validate( account ) )
+			if ( ! (await _context.Accounts.ValidateAsync( account )) )
 				return Unauthorized();
 			return Ok(); //TODO return token
 		}
@@ -47,13 +49,15 @@ namespace Server.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Register( [FromBody] Account account )
 		{
-			//TODO Registerfunktion
-			if ( !_context.Accounts.UsernameExists( account.User ) )
-				_context.Accounts.AddAccount( account, SALT_LENGTH );
+			if ( _context.Accounts.UsernameExists( account.User ) )
+			{
+				return StatusCode( (int) HttpStatusCode.Conflict,
+					new Error( Error.ErrorCode.REGISTER_USERNAME_EXISTS, "Username already used" ));
+			}
+			_context.Accounts.AddAccount( account, SALT_LENGTH );
 			await _context.SaveChangesAsync();
-			return Ok(); 
+			return Ok();
 			//TODO return token
-			//TODO validate
 		}
 	}
 }

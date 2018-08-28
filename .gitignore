@@ -13,3 +13,4 @@
 *.user
 .DS_Store
 /Phaser/.DS_Store
+/Server/Server/towerfall.db
