@@ -60,9 +60,9 @@ function create (){
     new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
     //new Array(cursors.a, cursors.d, cursors.w, cursors.s)
     );
-    playerList = new Array(null, null, null);
+    playerList = new Array(2);
     var i;
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < playerList.length; i++) {
       playerList[i] = createPlayer(this, 1+i);
       playerList[i].cursorLeft = playerCursors[i][0];
       playerList[i].cursorRight = playerCursors[i][1];
@@ -70,6 +70,7 @@ function create (){
       playerList[i].cursorShoot= playerCursors[i][3];
       this.physics.add.collider(playerList[i], platforms, null, collideInvokerPlayerPlatform, this);
       this.physics.add.collider(playerList[i], ammo, hitAmmo, null, this);
+      this.physics.add.overlap(playerList[i], ammo, hitAmmo, null, this);
     }
     //  Collide the player with the platforms
 
@@ -87,7 +88,7 @@ function update ()
     }
 
     var i;
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < playerList.length; i++) {
       updatePlayer(playerList[i]);
     }
 
