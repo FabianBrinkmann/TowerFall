@@ -25,7 +25,6 @@ var platforms;
 var cursors;
 var ammo;
 var gameOver = false;
-var justShot = false;
 
 var game = new Phaser.Game(config);
 
