@@ -12,6 +12,4 @@
   * Error
     * Code: 401
       Content: 
-		'''
-          { errorcode: 1, error: 'Username already used'}
-      '''
+		`{ errorcode: 1, error: 'Username already used'}`
