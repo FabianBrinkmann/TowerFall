@@ -12,6 +12,7 @@ function createPlayer(game, playerNumber) {
     player.ammo = 3;
     player.setCollideWorldBounds(true);
     player.body.overlapY = 16;
+    player.justShot = false;
 
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
@@ -100,21 +101,21 @@ function updatePlayer(player) {
         //player.anims.play('turn');
     }
 
-    if (player.cursorShoot.isDown && !justShot)
+    if (player.cursorShoot.isDown && !player.justShot)
     {
         if (player.left)
         {
             shoot(player, 'arrowLeft');
-            justShotTimer();
+            justShotTimer(player);
         }
         else if (player.right)
         {
             shoot(player, 'arrowRight');
-            justShotTimer();
+            justShotTimer(player);
         }
     }
-
-    if (player.cursorUp.isDown && player.body.touching.down)
+    //console.log(player.body.touching.down);
+    if (player.cursorUp.isDown )//&& player.body.touching.down
     {
         player.setVelocityY(-330);
     }

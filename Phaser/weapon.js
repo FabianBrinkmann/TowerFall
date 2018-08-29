@@ -9,13 +9,14 @@ function shoot(shootingPlayer, imageName)
         shootingPlayer.ammo += - 1;
         var arrow = ammo.create(16, 16, imageName);
         arrow.setBounce(0);
-        arrow.setCollideWorldBounds(true);
+        arrow.setCollideWorldBounds(false);
         arrow.allowGravity = true;
         arrow.colided = false;
         //arrow.rotation = -50;
         //arrow.angularVelocity = -10;
         arrow.body.setGravity(0, 0);
         //arrow.on('', ammoCollide)
+        arrow.player = shootingPlayer;
 
         switch (imageName)
         {
@@ -24,24 +25,23 @@ function shoot(shootingPlayer, imageName)
                 Phaser.Display.Align.To.RightCenter(arrow, shootingPlayer, 0, 10);
                 break;
             default:
-                arrow.setVelocity(-500, -80);//-400
+                arrow.setVelocity(-500, -80);
                 Phaser.Display.Align.To.LeftCenter(arrow, shootingPlayer, 0, 10);
         }
-        //console.log(arrow.body.velocity);
     }
 }
 
-function justShotTimer(){
-    justShot = true;
+function justShotTimer(player){
+    player.justShot = true;
     setTimeout( () => {
-        justShot = false
+        player.justShot = false
     }, 500);
 }
 
-//Wird ausgelöst wenn ein Pfeil auf eine Platform trifft.
-//platform = die Platform die getroffen wurde.
-//collidedArrow = der Pfeil der die Platform trifft.
-function ammoCollide(platform, collidedAmmo)
+//Wird ausgelöst wenn ein Pfeil auf ein Tile trifft.
+//collidedAmmo = die Munition die die Platform trifft.
+//tile = dar Tile der getroffen wurde.
+function ammoCollide(collidedAmmo, tile)
 {
     collidedAmmo.setVelocity(0, 0);
     collidedAmmo.colided = true;
@@ -69,4 +69,10 @@ function hitAmmo (player, ammo)
 
         gameOver = true;
     }
+}
+
+function ammoInPlatform (platform, arrow)
+{
+  arrow.destroy();
+  arrow.player.ammo += 1;
 }
