@@ -32,9 +32,15 @@ function shoot(shootingPlayer, imageName)
 }
 
 function justShotTimer(player){
+<<<<<<< HEAD
     player.justShot = true;
     setTimeout( () => {
         player.justShot = false
+=======
+        player.shootBlocked=true;
+    setTimeout( () => {
+        player.shootBlocked = false;
+>>>>>>> master
     }, 500);
 }
 

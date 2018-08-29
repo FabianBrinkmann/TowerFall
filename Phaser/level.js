@@ -12,9 +12,15 @@ var map;
 
 function createLevel(game) {
     var platforms
+<<<<<<< HEAD
     // //  A simple background for our game
     // game.add.image(400, 300, 'sky');
     // //  The platforms group contains the ground and the 2 ledges we can jump on
+=======
+    //  A simple background for our game
+    game.add.image(400, 300, 'background');
+    //  The platforms group contains the ground and the 2 ledges we can jump on
+>>>>>>> master
     platforms = game.physics.add.staticGroup();
 
     // //  Here we create the ground and the top.
