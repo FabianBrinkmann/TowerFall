@@ -7,6 +7,11 @@ namespace Utility.Hash
 {
     public class SHA256Utility
     {
+		/// <summary>
+		/// Computes SHA256-Hash for a given string
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
         public static string ComputeHash(string data)
         {
             using (SHA256 sha = SHA256.Create())

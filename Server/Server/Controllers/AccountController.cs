@@ -13,6 +13,10 @@ using Utility.Hash;
 using Database.Database.Extensions;
 using System.Net;
 using Server.Models;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Server.Controllers
 {
@@ -21,28 +25,32 @@ namespace Server.Controllers
 	public class AccountController : ControllerBase
 	{
 		private readonly TowerfallContext _context;
+		private readonly IConfiguration config;
 		private readonly int SALT_LENGTH = 512;
 
-		public AccountController( TowerfallContext context )
+		public AccountController( IConfiguration _config, TowerfallContext context )
 		{
 			_context = context;
-
+			config = _config;
 		}
 
-		// GET: api/Account
+#if DEBUG
+		[Route( "accountsdebug" )]
 		[HttpGet]
 		public IEnumerable<HashedPWAccount> GetAccounts()
 		{
 			return _context.Accounts;
 		}
+#endif
 
 		[Route( "login" )]
 		[HttpPost]
 		public async Task<IActionResult> Login( [FromBody] Account account )
 		{
-			if ( ! (await _context.Accounts.ValidateAsync( account )) )
-				return Unauthorized();
-			return Ok(); //TODO return token
+			if ( !( await _context.Accounts.ValidateAsync( account ) ) )
+				return StatusCode( (int) HttpStatusCode.Unauthorized,
+					new Error( Error.ErrorCode.LOGIN_USER_OR_PW_WRONG, "Username or password wrong" ) );
+			return Ok( new { token = BuildToken( account ) } );
 		}
 
 		[Route( "register" )]
@@ -52,12 +60,26 @@ namespace Server.Controllers
 			if ( _context.Accounts.UsernameExists( account.User ) )
 			{
 				return StatusCode( (int) HttpStatusCode.Conflict,
-					new Error( Error.ErrorCode.REGISTER_USERNAME_EXISTS, "Username already used" ));
+					new Error( Error.ErrorCode.REGISTER_USERNAME_EXISTS, "Username already used" ) );
 			}
 			_context.Accounts.AddAccount( account, SALT_LENGTH );
 			await _context.SaveChangesAsync();
-			return Ok();
-			//TODO return token
+			return Ok( new { token = BuildToken( account ) } );
+		}
+
+		private string BuildToken( Account user )
+		{
+			var key = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( config["Jwt:Key"] ) );
+			var creds = new SigningCredentials( key, SecurityAlgorithms.HmacSha256 );
+
+			var token = new JwtSecurityToken( config["Jwt:Issuer"],
+				config["Jwt:Issuer"],
+				notBefore: DateTime.Now.AddMinutes( 10 ),
+				expires: DateTime.Now.AddMinutes( 300 ),
+				signingCredentials: creds
+				);
+
+			return new JwtSecurityTokenHandler().WriteToken( token );
 		}
 	}
 }
