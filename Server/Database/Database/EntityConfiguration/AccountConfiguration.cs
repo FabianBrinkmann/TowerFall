@@ -9,6 +9,10 @@ namespace Database.Database.EntityConfiguration
 {
 	public class AccountConfiguration : IEntityTypeConfiguration<HashedPWAccount>
 	{
+		/// <summary>
+		/// Builds the Database relations and columns for type HashedPWAccount
+		/// </summary>
+		/// <param name="builder"></param>
 		public void Configure( EntityTypeBuilder<HashedPWAccount> builder )
 		{
 			builder.HasKey( account => account.User );

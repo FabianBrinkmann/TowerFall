@@ -9,7 +9,12 @@ namespace Database.Database.EntityConfiguration
 {
     public class CharacterConfiguration : IEntityTypeConfiguration<Character>
     {
-        public void Configure(EntityTypeBuilder<Character> builder)
+		/// <summary>
+		/// Builds the Database relations and columns for type Character
+		/// </summary>
+		/// <param name="builder"></param>
+
+		public void Configure(EntityTypeBuilder<Character> builder)
         {
             builder.HasKey(character => character.CharacterName);
         }
