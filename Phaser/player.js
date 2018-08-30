@@ -104,7 +104,7 @@ function updatePlayer(player) {
         {
             player.anims.play('lookRight', true);
         }
-        else if (player.left && !player.shootBlocked)
+        else if (player.left && !player.hasJustShot)
         {
             player.anims.play('lookLeft', true);
         }
