@@ -33,26 +33,16 @@ var platformLayer;
 function preload ()
 {
     // map graphics
-    this.load.image('wall', 'assets/wall.png');
-    this.load.image('ground', 'assets/ground.png');
-    this.load.image('platform', 'assets/platform.png');
-    this.load.image('background', 'assets/background.png');
     this.load.image('arrowUp', 'assets/arrowUp.png');
     this.load.image('arrowDown', 'assets/arrowDown.png');
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
     this.load.image('arrowRight', 'assets/arrowRight.png');
-<<<<<<< HEAD
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-
     this.load.image('tiles', 'assets/tilemaps/tiles/TowerFall.png');
     this.load.tilemapTiledJSON({
         key: 'map',
         url: 'assets/tilemaps/maps/TowerFall.json'
     });
-
-=======
     this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 43, frameHeight: 85 });
->>>>>>> master
 }
 
 //Erstellt die Umgebung und weiteres.
@@ -124,7 +114,7 @@ function update (time, delta)
 //tile = der Tile
 function collideInvokerPlayerPlatform (player, tile)
 {
-  //console.log(tile);
+  console.log(player);
     var result = true;
     if (player.body.velocity.y < 0)
     {
