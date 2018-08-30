@@ -100,7 +100,7 @@ function updatePlayer(player) {
     }
     else
     {
-        if (player.right && !player.shootBlocked)
+        if (player.right && !player.hasJustShot)
         {
             player.anims.play('lookRight', true);
         }
@@ -112,7 +112,7 @@ function updatePlayer(player) {
         player.setVelocityX(0);
     }
 
-    if (player.cursorShoot.isDown && !player.shootBlocked)
+    if (player.cursorShoot.isDown && !player.hasJustShot)
     {
         player.hasJustShot=true;
         if (player.left)
