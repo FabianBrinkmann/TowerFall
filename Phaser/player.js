@@ -82,6 +82,7 @@ function updatePlayer(player) {
 
     if (player.cursorLeft.isDown)
     {
+        player.hasJustShot=false;
         player.setVelocityX(-160);
 
         player.anims.play('left', true);
@@ -90,6 +91,7 @@ function updatePlayer(player) {
     }
     else if (player.cursorRight.isDown)
     {
+        player.hasJustShot=false;
         player.setVelocityX(160);
 
         player.anims.play('right', true);
@@ -110,8 +112,9 @@ function updatePlayer(player) {
         player.setVelocityX(0);
     }
 
-    if (player.cursorShoot.isDown && !player.hasJustShot)
+    if (player.cursorShoot.isDown && !player.shootBlocked)
     {
+        player.hasJustShot=true;
         if (player.left)
         {
             player.anims.play('shootLeft');
