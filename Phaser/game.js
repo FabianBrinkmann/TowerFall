@@ -80,6 +80,7 @@ function create (){
     }
 
     this.physics.add.collider(ammo, groundLayer, ammoCollide, null, this);
+    this.physics.add.collider(ammo, platformLayer, ammoCollide, null, this);
     // var controlConfig = {
     //     camera: this.cameras.main,
     //     left: cursors.left,
