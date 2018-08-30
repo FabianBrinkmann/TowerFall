@@ -31,6 +31,8 @@ namespace Server
 
 		public IConfiguration Configuration { get; }
 
+		private readonly string CORSPOLICY = "CorsPolicy";
+
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices( IServiceCollection services )
 		{
@@ -54,6 +56,15 @@ namespace Server
 
 			ConfigureEntityFramework( services );
 
+			services.AddCors( options =>
+			{
+				options.AddPolicy( CORSPOLICY,
+					builder => builder.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.AllowCredentials()
+					.Build() );
+			} );
 
 		}
 
@@ -101,6 +112,7 @@ namespace Server
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
 			app.UseMvc();
+			app.UseCors( CORSPOLICY );
 
 			using ( var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope() )
 			{
@@ -108,37 +120,8 @@ namespace Server
 				db.Database.Migrate();
 			}
 
-		}
+			
 
-		/// <summary>
-		/// Creates symmetric keys and stores them in registry
-		/// </summary>
-		public void CreateKeys()
-		{
-			RegistryKey key = Registry.CurrentUser.CreateSubKey( "TowerfallKeys" );
-			if ( key.GetValue( "key" ) != null && key.GetValue( "iv" ) != null )
-				return; //Keys already present. No need to create new
-			using ( RijndaelManaged rijn = new RijndaelManaged() )
-			{
-				rijn.GenerateKey();
-				rijn.GenerateIV();
-
-				var rijnKey = rijn.Key;
-				var rijnIV = rijn.IV;
-				key.SetValue( "key", System.Convert.ToBase64String( rijnKey ) );
-				key.SetValue( "iv", System.Convert.ToBase64String( rijnIV ) );
-				key.Close();
-			}
-		}
-
-		public (byte[] key, byte[] iv) GetKeys()
-		{
-			var key = Registry.CurrentUser.OpenSubKey( "TowerfallKeys" );
-			var b64Key = (string) key.GetValue( "key" );
-			var b64iv = (string) key.GetValue( "iv" );
-			var bArrKey = System.Convert.FromBase64String( b64Key );
-			var bArrIV = System.Convert.FromBase64String( b64iv );
-			return (bArrKey, bArrIV);
 		}
 	}
 }
