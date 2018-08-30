@@ -1,11 +1,11 @@
 function createPlayer(game, playerNumber) {
     var player;
     if (playerNumber===1) {
-        player = game.physics.add.sprite(200, 450, 'cowboy');
+        player = game.physics.add.sprite(200, 450, 'cowboy').setScale(0.7, 0.7);
         player.right=true;
         player.left=false;
     }else {
-        player = game.physics.add.sprite(400, 450, 'cowboy');
+        player = game.physics.add.sprite(400, 450, 'cowboy').setScale(0.7, 0.7);
         player.right=false;
         player.left=true;
     }
@@ -82,7 +82,6 @@ function updatePlayer(player) {
 
     if (player.cursorLeft.isDown)
     {
-        player.hasJustShot=false;
         player.setVelocityX(-160);
 
         player.anims.play('left', true);
@@ -91,7 +90,6 @@ function updatePlayer(player) {
     }
     else if (player.cursorRight.isDown)
     {
-        player.hasJustShot=false;
         player.setVelocityX(160);
 
         player.anims.play('right', true);
@@ -114,7 +112,6 @@ function updatePlayer(player) {
 
     if (player.cursorShoot.isDown && !player.hasJustShot)
     {
-        player.hasJustShot=true;
         if (player.left)
         {
             player.anims.play('shootLeft');
@@ -128,8 +125,8 @@ function updatePlayer(player) {
             justShotTimer(player);
         }
     }
-
-    if (player.cursorUp.isDown && player.body.touching.down)
+    //console.log(player.body.touching.down);
+    if (player.cursorUp.isDown && player.body.blocked.down)//&& player.body.touching.down
     {
         player.setVelocityY(-330);
     }
