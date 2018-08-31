@@ -115,7 +115,7 @@ function update (time, delta)
 //tile = der Tile
 function collideInvokerPlayerPlatform (player, tile)
 {
-  console.log(player);
+//  console.log(player);
     var result = true;
     if (player.body.velocity.y < 0)
     {

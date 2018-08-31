@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+}
+
+#overlay {
+    position: absolute;
+    width: 1050px;
+    height: 700px;
+    background-image: url('../assets/loginbackground.jpg');
+    background-position-x: -100px;
+}
+
+#first-login {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.form-style {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20%;
+    margin: 0 auto;
+}
+
+input {
+    margin: 30px;
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    outline: none;
+}
+
+[type=text], [type=password] {
+    padding-left: 10px;
+}
+
+[type=submit] {
+
+}
