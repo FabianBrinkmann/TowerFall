@@ -17,6 +17,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Server.Controllers
 {
@@ -37,6 +39,7 @@ namespace Server.Controllers
 #if DEBUG
 		[Route( "accountsdebug" )]
 		[HttpGet]
+		[Authorize]
 		public IEnumerable<HashedPWAccount> GetAccounts()
 		{
 			return _context.Accounts;
@@ -73,9 +76,9 @@ namespace Server.Controllers
 			var creds = new SigningCredentials( key, SecurityAlgorithms.HmacSha256 );
 
 			var token = new JwtSecurityToken( config["Jwt:Issuer"],
-				config["Jwt:Issuer"],
-				notBefore: DateTime.Now.AddMinutes( 10 ),
-				expires: DateTime.Now.AddMinutes( 300 ),
+				audience: config["Jwt:Issuer"],
+				claims: new Claim[] {new Claim(ClaimTypes.Name, user.User)},
+				notBefore: DateTime.Now,
 				signingCredentials: creds
 				);
 

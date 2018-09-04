@@ -111,8 +111,9 @@ namespace Server
 			}
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
-			app.UseMvc();
+			app.UseCors();
 			app.UseCors( CORSPOLICY );
+			app.UseMvc();
 
 			using ( var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope() )
 			{
