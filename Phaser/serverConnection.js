@@ -15,16 +15,21 @@ var ServerConnection = (function(){
         req.setRequestHeader("Content-Type", "application/json");
         if(this.token != null)
             req.setRequestHeader("Authorization", "Bearer "+this.token);
+
+        if(options.beforeSend != undefined)
+            options.beforeSend(req);
+
         req.onload = function () {
             if(this.status >= 200 && this.status < 400){
                 if(options.fnSuccess)
-                    options.fnSuccess(this.response);
+                    options.fnSuccess(this);
             }
             else{
                 if(options.fnFailure)
-                    options.fnFailure(this.response);
+                    options.fnFailure(this);
             }
         };
+
         if(options.body != undefined) {
             if (options.body instanceof String)
                 req.send(options.body);
@@ -37,7 +42,7 @@ var ServerConnection = (function(){
 
     /**
      * Sends loginrequest to server.
-     * Calls fnSuccess and fnFailure with the responsebody
+     * Calls fnSuccess and fnFailure with the response
      * @param strUsername
      * @param strPassword
      * @param fnSuccess  Called on  200 <= statuscode < 400
@@ -48,7 +53,7 @@ var ServerConnection = (function(){
         this.sendJsonRequest("login", {
             method:"POST",
             fnSuccess: function (response) {
-                this.token = JSON.parse(response).token;
+                this.token = JSON.parse(response.response).token;
                 fnSuccess(response);
             }.bind(this),
             fnFailure: fnFailure,
@@ -61,7 +66,7 @@ var ServerConnection = (function(){
 
     /**
      * Sends registerrequest to server.
-     * Calls fnSuccess and fnFailure with response body as argument
+     * Calls fnSuccess and fnFailure with response as argument
      * @param strUsername
      * @param strPassword
      * @param fnSuccess Called on 200 <= statuscode < 400
@@ -71,7 +76,7 @@ var ServerConnection = (function(){
         this.sendJsonRequest("register",{
             method:"POST",
             fnSuccess: function (response) {
-                this.token = JSON.parse(response).token;
+                this.token = JSON.parse(response.response).token;
                 fnSuccess(response);
             }.bind(this),
             fnFailure: fnFailure,
