@@ -70,6 +70,11 @@ namespace Server.Controllers
 			return Ok( new { token = BuildToken( account ) } );
 		}
 
+		/// <summary>
+		/// Creates an encrypted token for future authentication
+		/// </summary>
+		/// <param name="user">Account to create token for</param>
+		/// <returns></returns>
 		private string BuildToken( Account user )
 		{
 			var key = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( config["Jwt:Key"] ) );
