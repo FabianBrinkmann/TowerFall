@@ -118,13 +118,13 @@ function updatePlayer(player) {
         if (player.left)
         {
             player.anims.play('shootLeft');
-            shoot(player, 'arrowLeft');
+            shoot(player, 'bullet', 'left');
             justShotTimer(player);
         }
         else if (player.right)
         {
             player.anims.play('shootRight');
-            shoot(player, 'arrowRight');
+            shoot(player, 'bullet', 'right');
             justShotTimer(player);
         }
     }

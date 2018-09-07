@@ -1,32 +1,30 @@
 
-//Erstellt einen Pfeil und schießt ihn ab.
+//Erstellt eine Munition und schießt sie ab.
 //shootingPlayer = der Spieler der schießt.
-//imageName = das Bild das für den Pfeil benutzt werden soll.
-function shoot(shootingPlayer, imageName)
+//imageName = das Bild das für die Munition benutzt werden soll.
+//direktion = Die Richtung in die geschossen werden soll.
+function shoot(shootingPlayer, imageName, direktion)
 {
     if(shootingPlayer.ammo > 0)
     {
         shootingPlayer.ammo += - 1;
-        var arrow = ammo.create(16, 16, imageName);
-        arrow.setBounce(0);
-        arrow.setCollideWorldBounds(false);
-        arrow.allowGravity = true;
-        arrow.colided = false;
-        //arrow.rotation = -50;
-        //arrow.angularVelocity = -10;
-        arrow.body.setGravity(0, 0);
-        //arrow.on('', ammoCollide)
-        arrow.player = shootingPlayer;
+        var ammo = ammunition.create(16, 16, imageName);
+        ammo.setBounce(0);
+        ammo.setCollideWorldBounds(false);
+        ammo.allowGravity = true;
+        ammo.colided = false;
+        ammo.body.setGravity(0, 0);
+        ammo.player = shootingPlayer;
 
-        switch (imageName)
+        switch (direktion)
         {
-            case 'arrowRight':
-                arrow.setVelocity(500, -80);
-                Phaser.Display.Align.To.RightCenter(arrow, shootingPlayer, 0, 10);
+            case 'right':
+                ammo.setVelocity(500, -80);
+                Phaser.Display.Align.To.RightCenter(ammo, shootingPlayer, 0, 10).rotation = 180;
                 break;
             default:
-                arrow.setVelocity(-500, -80);
-                Phaser.Display.Align.To.LeftCenter(arrow, shootingPlayer, 0, 10);
+                ammo.setVelocity(-500, -80);
+                Phaser.Display.Align.To.LeftCenter(ammo, shootingPlayer, 0, 10);
         }
     }
 }
@@ -38,9 +36,9 @@ function justShotTimer(player){
     }, 500);
 }
 
-//Wird ausgelöst wenn ein Pfeil auf ein Tile trifft.
+//Wird ausgelöst wenn eine Munition auf ein Tile trifft.
 //collidedAmmo = die Munition die die Platform trifft.
-//tile = dar Tile der getroffen wurde.
+//tile = der Tile der getroffen wurde.
 function ammoCollide(collidedAmmo, tile)
 {
     collidedAmmo.setVelocity(0, 0);
@@ -48,10 +46,10 @@ function ammoCollide(collidedAmmo, tile)
     collidedAmmo.body.allowGravity = false;
 }
 
-//Wird ausgelöst wenn ein Spieler einen Pfeil berührt.
+//Wird ausgelöst wenn ein Spieler eine Munition berührt.
 //Wenn der Pfeil noch in bewegung ist stirbt der Spieler und wenn er liegt sammelt er ihn auf.
-//player = der Spieler der den Pfeil berührt.
-//arrow = der Pfeil der den Spieler berührt.
+//player = der Spieler der die Munition berührt.
+//ammo = die Munition die den Spieler berührt.
 function hitAmmo (player, ammo)
 {
     if(ammo.colided)

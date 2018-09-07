@@ -21,7 +21,7 @@ var config = {
 var playerList;
 var map;
 var cursors;
-var ammo;
+var ammunition;
 var gameOver = false;
 
 var game = new Phaser.Game(config);
@@ -38,6 +38,7 @@ function preload ()
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
     this.load.image('arrowRight', 'assets/arrowRight.png');
     this.load.image('tiles', 'assets/tilemaps/tiles/TowerFall.png');
+    this.load.image('bullet', 'assets/bullet.png');
     this.load.tilemapTiledJSON({
         key: 'map',
         url: 'assets/tilemaps/maps/TowerFall.json'
@@ -61,7 +62,7 @@ function create (){
     //this.cameras.main.setBounds(0, 0, platforms.widthInPixels, platforms.heightInPixels);
 
     cursors = this.input.keyboard.createCursorKeys();
-    ammo = this.physics.add.group();
+    ammunition = this.physics.add.group();
     var playerCursors = new Array(
     new Array(cursors.left, cursors.right, cursors.up, cursors.space),//65 ist der Key von A
     new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
@@ -76,11 +77,11 @@ function create (){
       playerList[i].cursorShoot= playerCursors[i][3];
       this.physics.add.collider(playerList[i], platformLayer, null, collideInvokerPlayerPlatform, this);
       this.physics.add.collider(playerList[i], groundLayer);
-      this.physics.add.collider(playerList[i], ammo, hitAmmo, null, this);
+      this.physics.add.collider(playerList[i], ammunition, hitAmmo, null, this);
     }
 
-    this.physics.add.collider(ammo, groundLayer, ammoCollide, null, this);
-    this.physics.add.collider(ammo, platformLayer, ammoCollide, null, this);
+    this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
+    this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
     // var controlConfig = {
     //     camera: this.cameras.main,
     //     left: cursors.left,
