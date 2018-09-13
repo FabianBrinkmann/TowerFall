@@ -31,7 +31,7 @@ var platformLayer;
 
 //Lädt dinge wie z.B. Bilder.
 function preload ()
-{
+{ 
     // map graphics
     this.load.image('arrowUp', 'assets/arrowUp.png');
     this.load.image('arrowDown', 'assets/arrowDown.png');
