@@ -5,9 +5,9 @@ function logIn() {
     const username = document.querySelectorAll('[type="text"]')[0].value;
     const password = document.querySelectorAll('[type="password"]')[0].value;
     ServerConnection.login(username, password, function (response) {
-        window.sessionStorage.setItem('token', JSON.parse(response.response).token);
-        console.log(window.sessionStorage.getItem('token'));
-        if(window.sessionStorage.getItem('token') != null) {
+        window.localStorage.setItem('token', JSON.parse(response.response).token);
+        console.log(window.localStorage.getItem('token'));
+        if(window.localStorage.getItem('token') != null) {
             gameAccessable();
             document.getElementById('overlay').style.display = 'none';
         }
