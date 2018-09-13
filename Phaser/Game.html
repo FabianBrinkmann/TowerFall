@@ -11,17 +11,36 @@
   <script type="text/javascript" src="player.js"></script>
   <script type="text/javascript" src="weapon.js"></script>
   <link href="styles/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 </head>
 <body>
   <div id="overlay">
     <div id="first-login">
-      <form id="first-login-form" class="form-style">
+      <form onsubmit="return logIn()" id="first-login-form" class="form-style">
+        <input type="text" name="username" placeholder="Username" maxlength="16" />
+        <input type="password" name="password" placeholder="Password" maxlength="16" />
+        <input type="button" onclick="logIn()" value="Login" />
+        <div class="registerToggle" onclick="showRegistrationForm()">
+          New to the Game?<br />
+          Register here.
+        </div>
+        <div class="registerToggle" onclick="clearStorage()">
+          X
+        </div>
+      </form>
+    </div>
+    <div id="registration">
+      <form id="registration-form" class="form-style">
         <input type="text" name="username" placeholder="Username" maxlength="16" />
         <input type="password" name="password" placeholder="password" maxlength="16" />
-        <input type="button" onclick="logIn()" value="Login" />
+        <input type="button" onclick="registration()" value="Register" />
+        <div class="registerToggle" onclick="showLoginForm()">
+          Back to login page
+        </div>
       </form>
     </div>
   </div>
+  <script type="text/javascript" src="general.js"></script>
   <script type="text/javascript" src="game.js"></script>
 </body>
 </html>
