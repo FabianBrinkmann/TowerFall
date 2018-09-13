@@ -38,12 +38,11 @@ function preload ()
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
     this.load.image('arrowRight', 'assets/arrowRight.png');
     this.load.image('tiles', 'assets/tilemaps/tiles/TowerFall.png');
-    this.load.image('bullet', 'assets/bullet.png');
     this.load.tilemapTiledJSON({
         key: 'map',
         url: 'assets/tilemaps/maps/TowerFall.json'
     });
-    this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 43, frameHeight: 85 });
+    this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
 }
 
 //Erstellt die Umgebung und weiteres.
@@ -78,6 +77,7 @@ function create (){
       this.physics.add.collider(playerList[i], platformLayer, null, collideInvokerPlayerPlatform, this);
       this.physics.add.collider(playerList[i], groundLayer);
       this.physics.add.collider(playerList[i], ammunition, hitAmmo, null, this);
+      this.physics.add.overlap(playerList[i], ammunition, hitAmmo, null, this);
     }
 
     this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
@@ -93,6 +93,10 @@ function create (){
 
     //controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
 
+}
+
+function h (p, d){
+  console.log("t");
 }
 
 //Aktualisiert das Spiel
@@ -116,7 +120,7 @@ function update (time, delta)
 //tile = der Tile
 function collideInvokerPlayerPlatform (player, tile)
 {
-  console.log(player);
+  //console.log(player);
     var result = true;
     if (player.body.velocity.y < 0)
     {

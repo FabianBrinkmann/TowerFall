@@ -1,11 +1,11 @@
 function createPlayer(game, playerNumber) {
     var player;
     if (playerNumber===1) {
-        player = game.physics.add.sprite(200, 450, 'cowboy').setScale(0.7, 0.7);
+        player = game.physics.add.sprite(200, 450, 'cowboy');
         player.right=true;
         player.left=false;
     }else {
-        player = game.physics.add.sprite(400, 450, 'cowboy').setScale(0.7, 0.7);
+        player = game.physics.add.sprite(400, 450, 'cowboy');
         player.right=false;
         player.left=true;
     }
@@ -61,7 +61,7 @@ function createPlayer(game, playerNumber) {
 
     // set player text
 
-    var style = {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
+    var style = {font: "bold 16px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
 
     if (playerNumber===1) {
         player.name='PlayerOne';
