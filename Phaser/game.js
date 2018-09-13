@@ -21,7 +21,7 @@ var config = {
 var playerList;
 var map;
 var cursors;
-var ammo;
+var ammunition;
 var gameOver = false;
 
 var game = new Phaser.Game(config);
@@ -31,7 +31,7 @@ var platformLayer;
 
 //Lädt dinge wie z.B. Bilder.
 function preload ()
-{
+{ 
     // map graphics
     this.load.image('arrowUp', 'assets/arrowUp.png');
     this.load.image('arrowDown', 'assets/arrowDown.png');
@@ -42,7 +42,7 @@ function preload ()
         key: 'map',
         url: 'assets/tilemaps/maps/TowerFall.json'
     });
-    this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 43, frameHeight: 85 });
+    this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
 }
 
 //Erstellt die Umgebung und weiteres.
@@ -61,7 +61,7 @@ function create (){
     //this.cameras.main.setBounds(0, 0, platforms.widthInPixels, platforms.heightInPixels);
 
     cursors = this.input.keyboard.createCursorKeys();
-    ammo = this.physics.add.group();
+    ammunition = this.physics.add.group();
     var playerCursors = new Array(
     new Array(cursors.left, cursors.right, cursors.up, cursors.space),//65 ist der Key von A
     new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
@@ -76,11 +76,12 @@ function create (){
       playerList[i].cursorShoot= playerCursors[i][3];
       this.physics.add.collider(playerList[i], platformLayer, null, collideInvokerPlayerPlatform, this);
       this.physics.add.collider(playerList[i], groundLayer);
-      this.physics.add.collider(playerList[i], ammo, hitAmmo, null, this);
+      this.physics.add.collider(playerList[i], ammunition, hitAmmo, null, this);
+      this.physics.add.overlap(playerList[i], ammunition, hitAmmo, null, this);
     }
 
-    this.physics.add.collider(ammo, groundLayer, ammoCollide, null, this);
-    this.physics.add.collider(ammo, platformLayer, ammoCollide, null, this);
+    this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
+    this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
     // var controlConfig = {
     //     camera: this.cameras.main,
     //     left: cursors.left,
@@ -92,6 +93,10 @@ function create (){
 
     //controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
 
+}
+
+function h (p, d){
+  console.log("t");
 }
 
 //Aktualisiert das Spiel
@@ -115,7 +120,7 @@ function update (time, delta)
 //tile = der Tile
 function collideInvokerPlayerPlatform (player, tile)
 {
-  console.log(player);
+  //console.log(player);
     var result = true;
     if (player.body.velocity.y < 0)
     {
