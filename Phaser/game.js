@@ -1,3 +1,4 @@
+var ammunition;
 function gameAccessable() {
     var config = {
         type: Phaser.AUTO,
@@ -22,7 +23,7 @@ function gameAccessable() {
     var playerList;
     var map;
     var cursors;
-    var ammunition;
+    //var ammunition;
     var gameOver = false;
 
     var game = new Phaser.Game(config);

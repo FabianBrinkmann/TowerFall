@@ -20,7 +20,7 @@ function shoot(shootingPlayer, imageName, direktion)
         {
             case 'right':
                 ammo.setVelocity(500, -80);
-                Phaser.Display.Align.To.RightCenter(ammo, shootingPlayer, 0, 10).rotation = 180;
+                Phaser.Display.Align.To.RightCenter(ammo, shootingPlayer, 0, 10);
                 break;
             default:
                 ammo.setVelocity(-500, -80);
