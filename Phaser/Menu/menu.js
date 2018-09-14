@@ -1,11 +1,15 @@
 /**
  *
  * @param parentMenu
+ * @type Menu
  * @constructor
  */
 var Menu = function( parentMenu ) {
 	this.parent = parentMenu;
+	if(this.parent)
+		this.backItem = new BackMenuItem(this, parentMenu);
 	this.DOMElem = document.createElement( "div" );
+	this.DOMElem.classList.add( "menu" );
 	this.menuItems = [];
 }
 
@@ -13,10 +17,12 @@ var Menu = function( parentMenu ) {
  * Adds a menuItem to the menu.
  * Order matters
  * @param menuItem
+ * @type MenuItem
  * @return void
  */
 Menu.prototype.addItem = function( menuItem ) {
 	this.menuItems.push( menuItem );
+
 }
 
 /**
@@ -24,7 +30,24 @@ Menu.prototype.addItem = function( menuItem ) {
  * @return void
  */
 Menu.prototype.createHTML = function() {
+	this.menuItems.forEach( function( menuItem ) {
+		menuItem.createHTML();
+		var itemElem = menuItem.getElement();
+		this.DOMElem.appendChild(menuItem.getElement());
+	}.bind(this) );
+	if(this.backItem){
+		this.backItem.createHTML();
+		this.DOMElem.appendChild(this.backItem.getElement());
+	}
 
+}
+
+/**
+ * Returns the DOMElement
+ * @return {HTMLElement}
+ */
+Menu.prototype.getElement = function() {
+	return this.DOMElem;
 }
 
 /**

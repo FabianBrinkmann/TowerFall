@@ -8,6 +8,8 @@
 var MenuItem = function( menu, text ) {
 	this.text = text;
 	this.DOMElem = document.createElement( "div" );
+	this.DOMElem.classList.add("menu-item");
+	this.DOMElem.onclick = this.onClick.bind(this);
 	this.menu = menu;
 }
 
@@ -30,16 +32,17 @@ MenuItem.prototype.onClick = function( event ) {
 }
 
 /**
- * abscrat. inherited types should create their HTML here
+ * Abstract. inherited types should create their HTML here
  * @return void
  * @abstract
  */
-MenuItem.prototype.createHtml = function() {
-
+MenuItem.prototype.createHTML = function() {
+	var text = document.createElement( "div" );
+	text.textContent = this.text;
+	this.DOMElem.appendChild( text );
 }
 
 /**
- *
  * @returns {HTMLElement}
  */
 MenuItem.prototype.getElement = function() {
@@ -73,15 +76,17 @@ inherit( SelectMenuItem, MenuItem );
  * @constructor
  */
 var OnOffMenuItem = function( menu, text ) {
-	this.superClass.call(this, menu, text, ["On", "Off"]);
+	this.superClass.call( this, menu, text, [ "On", "Off" ] );
 }
 
-inherit(OnOffMenuItem, SelectMenuItem);
+inherit( OnOffMenuItem, SelectMenuItem );
 
 /**
  * MenuItem to get back to parentmenu
  * @param menu
+ * @type Menu
  * @param parentMenu
+ * @type Menu
  * @constructor
  */
 var BackMenuItem = function( menu, parentMenu ) {
@@ -109,7 +114,7 @@ inherit( BackMenuItem, MenuItem );
  * @constructor
  */
 var SubMenuItem = function( menu, text, subMenu ) {
-	this.superClass.call(this, menu, text);
+	this.superClass.constructor.call( this, menu, text );
 	this.subMenu = subMenu;
 }
 
@@ -117,10 +122,17 @@ var SubMenuItem = function( menu, text, subMenu ) {
  * Hides the current menu and shows the submenu
  * @param event
  */
-SubMenuItem.prototype.onClick = function(event){
-	this.getMenu.hide();
+SubMenuItem.prototype.onClick = function( event ) {
+	this.getMenu().hide();
 	this.subMenu.show();
 }
 
-inherit(SubMenuItem, MenuItem);
+inherit( SubMenuItem, MenuItem );
+
+var ActionMenuItem = function(menu, text, fnAction) {
+	this.superClass.constructor.call(this, menu, text);
+	this.DOMElem.onclick = fnAction;
+}
+
+inherit(ActionMenuItem, MenuItem);
 
