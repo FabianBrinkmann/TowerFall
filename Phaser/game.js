@@ -1,4 +1,7 @@
 var ammunition;
+var music;
+var soundFx = {};
+
 function gameAccessable() {
     var config = {
         type: Phaser.AUTO,
@@ -45,6 +48,12 @@ function gameAccessable() {
             url: 'assets/tilemaps/maps/TowerFall.json'
         });
         this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
+        //audio
+        this.load.audio('hit', 'assets/audio/hit.wav');
+        this.load.audio('shoot', 'assets/audio/shoot.mp3');
+        this.load.audio('jump', 'assets/audio/jump.mp3');
+        this.load.audio('music', 'assets/audio/music.mp3');
+
     }
 
 //Erstellt die Umgebung und weiteres.
@@ -66,7 +75,6 @@ function gameAccessable() {
         soundFx.hitSound = this.sound.add('hit');
         soundFx.shootSound = this.sound.add('shoot');
         soundFx.jumpSound = this.sound.add('jump');
-        soundFx.gameOver= this.sound.add('gameOver');
         music.play();
 
 
@@ -112,14 +120,20 @@ function gameAccessable() {
     }
 
     //Aktualisiert das Spiel
-    function update (time, delta) {
-        music.mute=true;
-        return
-    }
+    function update (time, delta)
+    {
+        //controls.update(delta);
+        if (gameOver)
+        {
+            music.mute=true;
+            return
+        }
 
-    var i;
-    for (i = 0; i < playerList.length; i++) {
-        updatePlayer(playerList[i]);
+        var i;
+        for (i = 0; i < playerList.length; i++) {
+            updatePlayer(playerList[i]);
+        }
+
     }
 }
 
