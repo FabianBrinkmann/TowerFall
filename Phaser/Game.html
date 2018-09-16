@@ -1,20 +1,46 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Test</title>
+  <title>Making your first Phaser 3 Game - Test</title>
   <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.1.1/dist/phaser.js"></script>-->
   <script src="node_modules/phaser/dist/phaser-arcade-physics.js"></script>
   <script src="node_modules/phaser/dist/phaser-core.js"></script>
   <script src="node_modules/phaser/dist/phaser.js"></script>
+  <script type="text/javascript" src="serverConnection.js"></script>
+  <script type="text/javascript" src="login.js"></script>
   <script type="text/javascript" src="player.js"></script>
   <script type="text/javascript" src="weapon.js"></script>
-  <style type="text/css">
-        body {
-            margin: 0;
-        }
-    </style>
+  <link href="styles/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 </head>
 <body>
-  <script type="text/javascript" src="game.js"></script>
+<div id="overlay">
+  <div id="first-login">
+    <form onsubmit="return logIn()" id="first-login-form" class="form-style">
+      <input type="text" name="username" placeholder="Username" maxlength="16" />
+      <input type="password" name="password" placeholder="Password" maxlength="16" />
+      <input type="button" onclick="logIn()" value="Login" />
+      <div class="registerToggle" onclick="showRegistrationForm()">
+        New to the Game?<br />
+        Register here.
+      </div>
+      <div class="registerToggle" onclick="clearStorage()">
+        X
+      </div>
+    </form>
+  </div>
+  <div id="registration">
+    <form id="registration-form" class="form-style">
+      <input type="text" name="username" placeholder="Username" maxlength="16" />
+      <input type="password" name="password" placeholder="password" maxlength="16" />
+      <input type="button" onclick="registration()" value="Register" />
+      <div class="registerToggle" onclick="showLoginForm()">
+        Back to login page
+      </div>
+    </form>
+  </div>
+</div>
+<script type="text/javascript" src="general.js"></script>
+<script type="text/javascript" src="game.js"></script>
 </body>
 </html>
