@@ -7,6 +7,7 @@ function shoot(shootingPlayer, imageName, direktion)
 {
     if(shootingPlayer.ammo > 0)
     {
+        soundFx.shootSound.play();
         shootingPlayer.ammo += - 1;
         var ammo = ammunition.create(16, 16, imageName);
         ammo.setBounce(0);
@@ -59,6 +60,8 @@ function hitAmmo (player, ammo)
     }
     else
     {
+        soundFx.hitSound.play();
+       // soundFx.gameOver.play();
         this.physics.pause();
 
         player.setTint(0xff0000);

@@ -10,7 +10,7 @@ function gameAccessable() {
             default: 'arcade',
             arcade: {
                 gravity: { y: 300 },
-                debug: true
+                //debug: true
             }
         },
         scene: {
@@ -59,6 +59,16 @@ function gameAccessable() {
         platformLayer = map.createStaticLayer(2, tiles, 0, 0);
         groundLayer.setCollisionBetween(0, 1848);
         platformLayer.setCollisionBetween(0, 1848);
+      
+        //sound / music settings and play
+        music = this.sound.add('music');
+        music.setLoop(true);
+        soundFx.hitSound = this.sound.add('hit');
+        soundFx.shootSound = this.sound.add('shoot');
+        soundFx.jumpSound = this.sound.add('jump');
+        soundFx.gameOver= this.sound.add('gameOver');
+        music.play();
+
 
         //this.cameras.main.setBounds(0, 0, platforms.widthInPixels, platforms.heightInPixels);
 
@@ -82,6 +92,7 @@ function gameAccessable() {
             this.physics.add.overlap(playerList[i], ammunition, hitAmmo, null, this);
         }
 
+
         this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
         this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
         // var controlConfig = {
@@ -92,10 +103,10 @@ function gameAccessable() {
         //     down: cursors.down,
         //     speed: 0.2
         // };
-
         //controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
 
     }
+
 
     function h (p, d){
         console.log("t");
@@ -104,11 +115,9 @@ function gameAccessable() {
 //Aktualisiert das Spiel
     function update (time, delta)
     {
-        //controls.update(delta);
-        if (gameOver)
-        {
-            return;
-        }
+        music.mute=true;
+        return
+    }
 
         var i;
         for (i = 0; i < playerList.length; i++) {
@@ -132,3 +141,14 @@ function gameAccessable() {
     }
 }
 
+function changeMuteSoundFx() {
+    for (let sound in soundFx){
+        if (!soundFx[sound].mute)soundFx[sound].mute=true;
+        else soundFx[sound].mute=false;
+    }
+}
+
+function changeMuteMusic() {
+    if (!music.mute) music.mute = true;
+    else music.mute = false;
+}
