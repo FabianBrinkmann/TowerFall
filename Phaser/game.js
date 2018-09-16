@@ -107,30 +107,26 @@ function gameAccessable() {
 
     }
 
-
     function h (p, d){
         console.log("t");
     }
 
-//Aktualisiert das Spiel
-    function update (time, delta)
-    {
+    //Aktualisiert das Spiel
+    function update (time, delta) {
         music.mute=true;
         return
     }
 
-        var i;
-        for (i = 0; i < playerList.length; i++) {
-            updatePlayer(playerList[i]);
-        }
-
+    var i;
+    for (i = 0; i < playerList.length; i++) {
+        updatePlayer(playerList[i]);
     }
+}
 
 //Wird ausgelöst wenn ein Spieler einen Tile berührt.
 //player = der Spieler
 //tile = der Tile
-    function collideInvokerPlayerPlatform (player, tile)
-    {
+    function collideInvokerPlayerPlatform (player, tile) {
         //console.log(player);
         var result = true;
         if (player.body.velocity.y < 0)
@@ -139,7 +135,6 @@ function gameAccessable() {
         }
         return result;
     }
-}
 
 function changeMuteSoundFx() {
     for (let sound in soundFx){
