@@ -8,7 +8,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: true
+           // debug: true
         }
     },
     scene: {
@@ -28,6 +28,8 @@ var game = new Phaser.Game(config);
 var groundLayer;
 var skyLayer;
 var platformLayer;
+var music;
+var soundFx = {};
 
 //Lädt dinge wie z.B. Bilder.
 function preload ()
@@ -43,6 +45,12 @@ function preload ()
         url: 'assets/tilemaps/maps/TowerFall.json'
     });
     this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
+    //audio
+    this.load.audio('hit', 'assets/audio/hit.wav');
+    this.load.audio('shoot', 'assets/audio/shoot.mp3');
+    this.load.audio('jump', 'assets/audio/jump.mp3');
+    this.load.audio('music', 'assets/audio/music.mp3');
+
 }
 
 //Erstellt die Umgebung und weiteres.
@@ -57,6 +65,16 @@ function create (){
     platformLayer = map.createStaticLayer(2, tiles, 0, 0);
     groundLayer.setCollisionBetween(0, 1848);
     platformLayer.setCollisionBetween(0, 1848);
+
+    //sound and music settings and play
+    music = this.sound.add('music');
+    music.setLoop(true);
+    soundFx.hitSound = this.sound.add('hit');
+    soundFx.shootSound = this.sound.add('shoot');
+    soundFx.jumpSound = this.sound.add('jump');
+    soundFx.gameOver= this.sound.add('gameOver');
+
+    music.play();
 
     //this.cameras.main.setBounds(0, 0, platforms.widthInPixels, platforms.heightInPixels);
 
@@ -92,7 +110,6 @@ function create (){
     // };
 
     //controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
-
 }
 
 function h (p, d){
@@ -105,7 +122,8 @@ function update (time, delta)
   //controls.update(delta);
     if (gameOver)
     {
-        return;
+        music.mute=true;
+        return
     }
 
     var i;
@@ -127,4 +145,16 @@ function collideInvokerPlayerPlatform (player, tile)
         result = false;
     }
     return result;
+}
+
+function changeMuteSoundFx() {
+    for (let sound in soundFx){
+        if (!soundFx[sound].mute)soundFx[sound].mute=true;
+        else soundFx[sound].mute=false;
+    }
+}
+
+function changeMuteMusic() {
+    if (!music.mute) music.mute = true;
+    else music.mute = false;
 }
