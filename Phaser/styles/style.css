@@ -3,12 +3,20 @@ body {
     font-family: 'Oswald', sans-serif;
 }
 
-#overlay {
+#overlay, #ingame-overlay {
     position: absolute;
     width: 1050px;
     height: 700px;
+}
+
+#overlay {
     background-image: url('../assets/loginbackground.jpg');
     background-position-x: -100px;
+}
+
+#ingame-overlay {
+    background-color:rgba(56, 56, 56, 0.4);
+    display: none;
 }
 
 #first-login {
