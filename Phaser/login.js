@@ -8,7 +8,7 @@ function logIn() {
         window.sessionStorage.setItem('token', JSON.parse(response.response).token);
         console.log(window.sessionStorage.getItem('token'));
         if(window.sessionStorage.getItem('token') != null) {
-            gameAccessable();
+            gameAccessable(username, password);
             document.getElementById('overlay').style.display = 'none';
         }
     }, function (failedLogin) {
