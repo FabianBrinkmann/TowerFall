@@ -9,19 +9,10 @@ else {
 */
 
 function createMenu() {
-	var rootMenu = new Menu( null );
-	var startItem = new ActionMenuItem( rootMenu, "Start", () => {
-		document.getElementById("overlay").style.display = "none";
-		gameAccessable();
-	} );
 
-	var optionsMenu = new Menu( rootMenu );
-	var optionsItem = new SubMenuItem( rootMenu, "Options", optionsMenu );
+	var startMenu = new StartMenu();
 
-
-	rootMenu.addItem( startItem );
-	rootMenu.addItem( optionsItem );
-	var manager = new MenuManager( [ rootMenu, optionsMenu ] );
+	var manager = new MenuManager( startMenu.getMenues() );
 	manager.createHTML();
 	var elem = manager.getElement();
 	document.getElementById( "overlay" ).appendChild( elem );

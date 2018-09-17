@@ -131,7 +131,12 @@ inherit( SubMenuItem, MenuItem );
 
 var ActionMenuItem = function(menu, text, fnAction) {
 	this.superClass.constructor.call(this, menu, text);
+	this.action = fnAction;
 	this.DOMElem.onclick = fnAction;
+}
+
+ActionMenuItem.prototype.onClick = function(event){
+	this.action();
 }
 
 inherit(ActionMenuItem, MenuItem);

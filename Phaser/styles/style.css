@@ -75,3 +75,7 @@ input {
     margin-right: auto;
     margin-bottom: 10px;
 }
+
+.menu-item.selected{
+    background-color: white;
+}
