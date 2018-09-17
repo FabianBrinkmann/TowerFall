@@ -28,6 +28,7 @@ Menu.prototype._buildDOMElem = function() {
  */
 Menu.prototype.onKeyPress = function( keyEvent ) {
 	var key = keyEvent.keyCode ? keyEvent.keyCode : keyEvent.which;
+	this.getCurrentItem().onKeyPressed( keyEvent )
 
 	switch ( key ) {
 		case 13:
@@ -59,13 +60,13 @@ Menu.prototype.addItem = function( menuItem ) {
  * @return void
  */
 Menu.prototype.createHTML = function() {
-	if(this.backItem)
-		this.menuItems.push(this.backItem);
+	if( this.backItem )
+		this.menuItems.push( this.backItem );
 	this.menuItems.forEach( function( menuItem ) {
 		menuItem.createHTML();
 		this.DOMElem.appendChild( menuItem.getElement() );
 	}.bind( this ) );
-	this.menuItems[0].getElement().classList.add("selected");
+	this.menuItems[ 0 ].getElement().classList.add( "selected" );
 
 }
 
@@ -108,9 +109,9 @@ Menu.prototype.hide = function() {
  * @return void
  */
 Menu.prototype.down = function() {
-	this.menuItems[ this.currentItem ].getElement().classList.remove( "selected" );
+	this.getCurrentItem().getElement().classList.remove( "selected" );
 	this.currentItem = ( this.currentItem + 1 + this.menuItems.length ) % this.menuItems.length;
-	this.menuItems[ this.currentItem ].getElement().classList.add( "selected" );
+	this.getCurrentItem().getElement().classList.add( "selected" );
 }
 
 /**
@@ -118,15 +119,17 @@ Menu.prototype.down = function() {
  * @return void
  */
 Menu.prototype.up = function() {
-	this.menuItems[ this.currentItem ].getElement().classList.remove( "selected" );
+	this.getCurrentItem().getElement().classList.remove( "selected" );
 	this.currentItem = ( this.currentItem - 1 + this.menuItems.length ) % this.menuItems.length;
-	this.menuItems[ this.currentItem ].getElement().classList.add( "selected" );
+	this.getCurrentItem().getElement().classList.add( "selected" );
 }
 
 Menu.prototype.enter = function() {
-	this.menuItems[ this.currentItem ].onClick();
+	this.getCurrentItem().onClick();
 }
 
-
+Menu.prototype.getCurrentItem = function() {
+	return this.menuItems[ this.currentItem ];
+}
 
 

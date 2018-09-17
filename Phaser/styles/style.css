@@ -61,7 +61,7 @@ input {
 }
 
 .menu{
-    width:350px;
+    width:500px;
     margin-top: 20px;
     background-color:gray;
     margin-left: auto;
@@ -69,13 +69,41 @@ input {
 }
 
 .menu-item{
-    width:130px;
+    width:100%;
     background-color: lightgray;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .menu-item.selected{
     background-color: white;
 }
+
+.option-value{
+    display: none;
+    text-align: left;
+}
+
+.option-value.selected{
+    display: block;
+}
+
+.option-values{
+    display: inline-block;
+    width: calc(50% - 10px);
+    margin-left: 10px;
+}
+
+.option-name{
+    display: inline-block;
+    width:50%;
+    text-align: right;
+}
+
+.option-name:after{
+    margin-left: 10px;
+    content:":";
+}
+

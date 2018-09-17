@@ -1,5 +1,4 @@
 /**
- *
  * @param menu
  * @param text
  * @constructor
@@ -8,8 +7,8 @@
 var MenuItem = function( menu, text ) {
 	this.text = text;
 	this.DOMElem = document.createElement( "div" );
-	this.DOMElem.classList.add("menu-item");
-	this.DOMElem.onclick = this.onClick.bind(this);
+	this.DOMElem.classList.add( "menu-item" );
+	this.DOMElem.onclick = this.onClick.bind( this );
 	this.menu = menu;
 }
 
@@ -32,7 +31,15 @@ MenuItem.prototype.onClick = function( event ) {
 }
 
 /**
- * Abstract. inherited types should create their HTML here
+ * @return return false indicates a hanlded event
+ * @param keyEvent
+ */
+MenuItem.prototype.onKeyPressed = function( keyEvent ) {
+	return true;
+}
+
+/**
+ * Default. inherited types should create their HTML here
  * @return void
  * @abstract
  */
@@ -54,17 +61,74 @@ MenuItem.prototype.getElement = function() {
  * @param menu
  * @param text
  * @param options
+ * @param fnOnChange calls the function with the new value
  * @constructor
  */
-var SelectMenuItem = function( menu, text, options ) {
+var SelectMenuItem = function( menu, text, options, fnOnChange ) {
 	this.superClass.constructor.call( this, menu, text );
 	this.options = options;
 	this.nCurrentOption = 0;
+	this.fnOnChange = fnOnChange;
 }
 
 SelectMenuItem.prototype.onClick = function( event ) {
-	this.nCurrentOption = ( this.nCurrentOption + 1 ) % this.options.length;
-	//TODO change selected item
+	this._changeRight();
+}
+
+/**
+ * Changes to next item
+ * @private
+ */
+SelectMenuItem.prototype._changeRight = function(){
+	var children = this.DOMElem.getElementsByClassName( "option-value" );
+	children[ this.nCurrentOption ].classList.remove( "selected" );
+	this.nCurrentOption = ( this.nCurrentOption + 1 + this.options.length ) % this.options.length;
+	children[ this.nCurrentOption ].classList.add( "selected" );
+	this.fnOnChange( this.options[ this.nCurrentOption ] );
+}
+
+/**
+ * Changes to previous item
+ * @private
+ */
+SelectMenuItem.prototype._changeLeft = function(){
+	var children = this.DOMElem.getElementsByClassName( "option-value" );
+	children[ this.nCurrentOption ].classList.remove( "selected" );
+	this.nCurrentOption = ( this.nCurrentOption - 1 + this.options.length ) % this.options.length;
+	children[ this.nCurrentOption ].classList.add( "selected" );
+	this.fnOnChange( this.options[ this.nCurrentOption ] );
+}
+
+SelectMenuItem.prototype.onKeyPressed = function(keyEvent){
+	var key = keyEvent.keyCode ? keyEvent.keyCode : keyEvent.which;
+	switch ( key ) {
+		case 37: //left
+			this._changeLeft();
+			return true;
+		case 39: //right
+			this._changeRight();
+			return true;
+	}
+	return false;
+
+}
+
+SelectMenuItem.prototype.createHTML = function() {
+	var left = document.createElement( "div" );
+	left.classList.add( "option-name" );
+	var right = document.createElement( "div" );
+	right.classList.add( "option-values" );
+	this.options.forEach( ( elem, ind, arr ) => {
+		var value = document.createElement( "div" );
+		value.classList.add( "option-value" );
+		if( ind == 0 )
+			value.classList.add( "selected" );
+		value.textContent = elem;
+		right.appendChild( value );
+	} )
+	left.textContent = this.text;
+	this.DOMElem.appendChild( left );
+	this.DOMElem.appendChild( right );
 }
 
 inherit( SelectMenuItem, MenuItem );
@@ -72,11 +136,15 @@ inherit( SelectMenuItem, MenuItem );
 /**
  * Same as SelectMenuItem, but with predefined options "On" & "Off"
  * @param menu
+ * @type Menu
  * @param text
+ * @type String
+ * @param fnOnChange is called with the new value
+ * @type Function
  * @constructor
  */
-var OnOffMenuItem = function( menu, text ) {
-	this.superClass.call( this, menu, text, [ "On", "Off" ] );
+var OnOffMenuItem = function( menu, text, fnOnChange ) {
+	return new SelectMenuItem( menu, text, [ "On", "Off" ], fnOnChange );
 }
 
 inherit( OnOffMenuItem, SelectMenuItem );
@@ -129,15 +197,22 @@ SubMenuItem.prototype.onClick = function( event ) {
 
 inherit( SubMenuItem, MenuItem );
 
-var ActionMenuItem = function(menu, text, fnAction) {
-	this.superClass.constructor.call(this, menu, text);
+/**
+ * MenuItem which calls a given function onClick
+ * @param menu
+ * @param text
+ * @param fnAction
+ * @constructor
+ */
+var ActionMenuItem = function( menu, text, fnAction ) {
+	this.superClass.constructor.call( this, menu, text );
 	this.action = fnAction;
 	this.DOMElem.onclick = fnAction;
 }
 
-ActionMenuItem.prototype.onClick = function(event){
+ActionMenuItem.prototype.onClick = function( event ) {
 	this.action();
 }
 
-inherit(ActionMenuItem, MenuItem);
+inherit( ActionMenuItem, MenuItem );
 

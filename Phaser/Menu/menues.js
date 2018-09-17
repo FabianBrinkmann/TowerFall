@@ -1,5 +1,7 @@
 var StartMenu = function() {
 
+	this.options = {};
+
 	this.rootMenu = new Menu( null );
 	var startItem = new ActionMenuItem( this.rootMenu, "Start", () => {
 		document.getElementById( "overlay" ).style.display = "none";
@@ -9,9 +11,16 @@ var StartMenu = function() {
 	this.optionsMenu = new Menu( this.rootMenu );
 	var optionsItem = new SubMenuItem( this.rootMenu, "Options", this.optionsMenu );
 
+	var optChar = new SelectMenuItem( this.optionsMenu, "Character", [ "Cowboy" ],
+		( value ) => this.options.char = value );
+	var optSound = new OnOffMenuItem( this.optionsMenu, "Sound", ( value ) => this.options.soundEnabled = value );
+
+	this.optionsMenu.addItem( optChar );
+	this.optionsMenu.addItem( optSound );
 
 	this.rootMenu.addItem( startItem );
 	this.rootMenu.addItem( optionsItem );
+
 }
 
 /**
@@ -20,6 +29,10 @@ var StartMenu = function() {
  */
 StartMenu.prototype.getMenues = function() {
 	return [ this.rootMenu, this.optionsMenu ];
+}
+
+StartMenu.getOptions = function() {
+	return this.options;
 }
 
 var PauseMenu = function() {
