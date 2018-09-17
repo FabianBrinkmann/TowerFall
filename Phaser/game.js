@@ -3,7 +3,7 @@ var music;
 var soundFx = {};
 
 
-function gameAccessable() {
+function gameAccessable(username) {
     if(window.sessionStorage.getItem('token') != null) {
         var config = {
             type: Phaser.AUTO,
@@ -91,7 +91,7 @@ function gameAccessable() {
             playerList = new Array(2);
             var i;
             for (i = 0; i < playerList.length; i++) {
-                playerList[i] = createPlayer(this, 1+i);
+                playerList[i] = createPlayer(this, username, 1+i);
                 playerList[i].cursorLeft = playerCursors[i][0];
                 playerList[i].cursorRight = playerCursors[i][1];
                 playerList[i].cursorUp = playerCursors[i][2];

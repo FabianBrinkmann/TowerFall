@@ -1,4 +1,4 @@
-function createPlayer(game, playerNumber) {
+function createPlayer(game,username, playerNumber) {
     var player;
     if (playerNumber===1) {
         player = game.physics.add.sprite(200, 450, 'cowboy');
@@ -64,7 +64,7 @@ function createPlayer(game, playerNumber) {
     var style = {font: "bold 16px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
 
     if (playerNumber===1) {
-        player.name='PlayerOne';
+        player.name=`${username}`;
     }
     else player.name='PlayerTwo';
 
