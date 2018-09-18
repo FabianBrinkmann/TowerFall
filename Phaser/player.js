@@ -67,7 +67,6 @@ function createPlayer(game, name,  playerNumber) {
 
     player.playerText = Phaser.Display.Align.To.TopCenter(game.add.text(16, 16, player.name + player.ammo, style), player, 0, 0);
 
-
     return player;
 }
 
@@ -75,7 +74,6 @@ function createPlayer(game, name,  playerNumber) {
 
 
 function updatePlayer(player) {
-
 
     if (player.cursorLeft.isDown)
     {
@@ -115,19 +113,20 @@ function updatePlayer(player) {
         if (player.left)
         {
             player.anims.play('shootLeft');
-            shoot(player, 'bullet', 'left');
+            shoot(player, 'arrowLeft', 'left');
             justShotTimer(player);
         }
         else if (player.right)
         {
             player.anims.play('shootRight');
-            shoot(player, 'bullet', 'right');
+            shoot(player, 'arrowRight', 'right');
             justShotTimer(player);
         }
     }
     //console.log(player.body.touching.down);
     if (player.cursorUp.isDown && player.body.blocked.down)//&& player.body.touching.down
     {
+        soundFx.jumpSound.play();
         player.setVelocityY(-330);
     }
     player.playerText.text = player.name +' ' + player.ammo;
