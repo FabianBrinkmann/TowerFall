@@ -1,5 +1,15 @@
-// document.body.addEventListener( 'keydown', function (e) {
-//    if ( e.key === 'Enter' && document.getElementById('first-login').style.display === 'flex') {
-//        logIn();
-//    }
-// });
+inherit = function inherit( me, ancestor )
+{
+	var p = me.prototype;
+	var res = me;
+	res.prototype = new ancestor;
+	for ( var m in p )
+	{
+		if ( p.hasOwnProperty( m ) )
+			res.prototype[m] = p[m];
+	}
+	res.superClass = ancestor;
+	res.prototype.superClass = ancestor.prototype;
+
+	return res;
+};

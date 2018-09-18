@@ -1,21 +1,27 @@
-<html>
+﻿<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Making your first Phaser 3 Game - Test</title>
-  <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.1.1/dist/phaser.js"></script>-->
-  <script src="node_modules/phaser/dist/phaser-arcade-physics.js"></script>
-  <script src="node_modules/phaser/dist/phaser-core.js"></script>
-  <script src="node_modules/phaser/dist/phaser.js"></script>
-  <script type="text/javascript" src="serverConnection.js"></script>
-  <script type="text/javascript" src="login.js"></script>
-  <script type="text/javascript" src="player.js"></script>
-  <script type="text/javascript" src="weapon.js"></script>
-  <link href="styles/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Test</title>
+    <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.1.1/dist/phaser.js"></script>-->
+    <script src="node_modules/phaser/dist/phaser-arcade-physics.js"></script>
+    <script src="node_modules/phaser/dist/phaser-core.js"></script>
+    <script src="node_modules/phaser/dist/phaser.js"></script>
+    <script type="text/javascript" src="general.js"></script>
+    <script type="text/javascript" src="Menu/menu.js"></script>
+    <script type="text/javascript" src="Menu/menuItem.js"></script>
+    <script type="text/javascript" src="Menu/menuManager.js"></script>
+    <script type="text/javascript" src="Menu/menues.js"></script>
+    <script type="text/javascript" src="serverConnection.js"></script>
+    <script type="text/javascript" src="login.js"></script>
+    <script type="text/javascript" src="player.js"></script>
+    <script type="text/javascript" src="weapon.js"></script>
+    <script type="text/javascript" src="game.js"></script>
+    <link href="styles/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 </head>
 <body>
 <div id="overlay">
-  <div id="first-login">
+  <div id="first-login" style="display: none;">
     <form onsubmit="return logIn()" id="first-login-form" class="form-style">
       <input type="text" name="username" placeholder="Username" maxlength="16" />
       <input type="password" name="password" placeholder="Password" maxlength="16" />
@@ -24,12 +30,12 @@
         New to the Game?<br />
         Register here.
       </div>
-      <div class="registerToggle" onclick="clearStorage()">
+      <!-- <div class="registerToggle" onclick="clearStorage()">
         X
-      </div>
+      </div> -->
     </form>
   </div>
-  <div id="registration">
+  <div id="registration" style="display: none;">
     <form id="registration-form" class="form-style">
       <input type="text" name="username" placeholder="Username" maxlength="16" />
       <input type="password" name="password" placeholder="password" maxlength="16" />
@@ -40,7 +46,6 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="general.js"></script>
-<script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>

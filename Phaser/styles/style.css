@@ -55,3 +55,55 @@ input {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.menu-manager{
+    font-size:2.4em;
+}
+
+.menu{
+    width:500px;
+    margin-top: 20px;
+    background-color:gray;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-item{
+    width:100%;
+    background-color: lightgray;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.menu-item.selected{
+    background-color: white;
+}
+
+.option-value{
+    display: none;
+    text-align: left;
+}
+
+.option-value.selected{
+    display: block;
+}
+
+.option-values{
+    display: inline-block;
+    width: calc(50% - 10px);
+    margin-left: 10px;
+}
+
+.option-name{
+    display: inline-block;
+    width:50%;
+    text-align: right;
+}
+
+.option-name:after{
+    margin-left: 10px;
+    content:":";
+}
+
