@@ -60,7 +60,7 @@ MenuItem.prototype.getElement = function() {
  * Shows options as a "slideshow" with left and right buttons to change
  * @param menu
  * @param text
- * @param options
+ * @param options object with properties name and value
  * @param fnOnChange calls the function with the new value
  * @constructor
  */
@@ -79,37 +79,37 @@ SelectMenuItem.prototype.onClick = function( event ) {
  * Changes to next item
  * @private
  */
-SelectMenuItem.prototype._changeRight = function(){
+SelectMenuItem.prototype._changeRight = function() {
 	var children = this.DOMElem.getElementsByClassName( "option-value" );
 	children[ this.nCurrentOption ].classList.remove( "selected" );
 	this.nCurrentOption = ( this.nCurrentOption + 1 + this.options.length ) % this.options.length;
 	children[ this.nCurrentOption ].classList.add( "selected" );
-	this.fnOnChange( this.options[ this.nCurrentOption ] );
+	this.fnOnChange( this.options[ this.nCurrentOption ].value );
 }
 
 /**
  * Changes to previous item
  * @private
  */
-SelectMenuItem.prototype._changeLeft = function(){
+SelectMenuItem.prototype._changeLeft = function() {
 	var children = this.DOMElem.getElementsByClassName( "option-value" );
 	children[ this.nCurrentOption ].classList.remove( "selected" );
 	this.nCurrentOption = ( this.nCurrentOption - 1 + this.options.length ) % this.options.length;
 	children[ this.nCurrentOption ].classList.add( "selected" );
-	this.fnOnChange( this.options[ this.nCurrentOption ] );
+	this.fnOnChange( this.options[ this.nCurrentOption ].value );
 }
 
-SelectMenuItem.prototype.onKeyPressed = function(keyEvent){
+SelectMenuItem.prototype.onKeyPressed = function( keyEvent ) {
 	var key = keyEvent.keyCode ? keyEvent.keyCode : keyEvent.which;
 	switch ( key ) {
 		case 37: //left
 			this._changeLeft();
-			return true;
+			return false;
 		case 39: //right
 			this._changeRight();
-			return true;
+			return false;
 	}
-	return false;
+	return true;
 
 }
 
@@ -123,7 +123,7 @@ SelectMenuItem.prototype.createHTML = function() {
 		value.classList.add( "option-value" );
 		if( ind == 0 )
 			value.classList.add( "selected" );
-		value.textContent = elem;
+		value.textContent = elem.name;
 		right.appendChild( value );
 	} )
 	left.textContent = this.text;
@@ -144,7 +144,12 @@ inherit( SelectMenuItem, MenuItem );
  * @constructor
  */
 var OnOffMenuItem = function( menu, text, fnOnChange ) {
-	return new SelectMenuItem( menu, text, [ "On", "Off" ], fnOnChange );
+	return new SelectMenuItem( menu, text,
+		[
+			{ name: "On", value: true },
+			{ name: "Off", value: false }
+		],
+		fnOnChange );
 }
 
 inherit( OnOffMenuItem, SelectMenuItem );
@@ -216,3 +221,32 @@ ActionMenuItem.prototype.onClick = function( event ) {
 
 inherit( ActionMenuItem, MenuItem );
 
+
+var TextInputMenuItem = function( menu, text, fnOnChange ) {
+	this.superClass.constructor.call( this, menu, text );
+	this.fnOnChange = fnOnChange;
+}
+
+TextInputMenuItem.prototype.createHTML = function() {
+	var left = document.createElement( "div" );
+	left.classList.add( "option-name" );
+	this.right = document.createElement( "input" );
+	this.right.setAttribute( "type", "text" );
+	this.right.classList.add( "option-values" );
+	this.right.classList.add( "option-input" );
+	left.textContent = this.text;
+	this.DOMElem.appendChild( left );
+	this.DOMElem.appendChild( this.right );
+}
+
+TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
+	var key = keyEvent.keyCode ? keyEvent.keyCode : keyEvent.which;
+	switch ( key ) {
+		case 38:
+		case 40:
+			return true;
+	}
+	return true;
+}
+
+inherit( TextInputMenuItem, MenuItem );

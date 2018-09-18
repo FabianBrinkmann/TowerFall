@@ -17,9 +17,9 @@ var Menu = function( parentMenu ) {
 
 Menu.prototype._buildDOMElem = function() {
 	this.DOMElem = document.createElement( "div" );
-	this.DOMElem.setAttribute( "tabindex", "0" ); //needed for keyevents
+	this.DOMElem.setAttribute( "tabindex", '0' ); //needed for keyevents
 	this.DOMElem.classList.add( "menu" );
-	this.DOMElem.onkeypress = this.onKeyPress.bind( this );
+	this.DOMElem.onkeydown = this.onKeyPress.bind( this );
 }
 
 /**
