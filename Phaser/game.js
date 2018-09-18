@@ -1,5 +1,5 @@
 var ammunition;
-function gameAccessable() {
+function gameAccessable(options) {
     var config = {
         type: Phaser.AUTO,
         width: 1050,
@@ -71,7 +71,7 @@ function gameAccessable() {
         playerList = new Array(2);
         var i;
         for (i = 0; i < playerList.length; i++) {
-            playerList[i] = createPlayer(this, 1+i);
+            playerList[i] = createPlayer(this, options.players[i].name, 1+i);
             playerList[i].cursorLeft = playerCursors[i][0];
             playerList[i].cursorRight = playerCursors[i][1];
             playerList[i].cursorUp = playerCursors[i][2];

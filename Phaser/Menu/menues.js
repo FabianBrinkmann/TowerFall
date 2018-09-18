@@ -3,24 +3,26 @@ var StartMenu = function() {
 	this.options = {};
 
 	this.rootMenu = new Menu( null );
+	this.optionsMenu = new Menu( this.rootMenu );
+	this.optionsPlOne = new PlayerMenu( this.optionsMenu );
+	this.optionsPlTwo = new PlayerMenu( this.optionsMenu );
+
 	var startItem = new ActionMenuItem( this.rootMenu, "Start", () => {
 		document.getElementById( "overlay" ).style.display = "none";
-		gameAccessable();
+		console.log(this.getOptions());
+		gameAccessable(this.getOptions());
 	} );
+
+	var optionsItem = new SubMenuItem( this.rootMenu, "Options", this.optionsMenu );
 
 	var logoutItem = new ActionMenuItem( this.rootMenu, "Logout", () => {
 
 	} )
 
-	this.optionsMenu = new Menu( this.rootMenu );
-	var optionsItem = new SubMenuItem( this.rootMenu, "Options", this.optionsMenu );
 
-	var optChar = new SelectMenuItem( this.optionsMenu, "Character",
-		[
-			{ name: "Cowboy", value: "cowboy.png" },
-			{ name: "Dude", value: "dude.png" }
-		],
-		( value ) => this.options.char = value );
+	var optionsPlOneItem = new SubMenuItem( this.optionsMenu, "Player 1", this.optionsPlOne.getMenu() );
+	var optionsPlTwoItem = new SubMenuItem( this.optionsMenu, "Player 2", this.optionsPlTwo.getMenu() );
+
 	var optSound = new OnOffMenuItem( this.optionsMenu, "Sound", ( value ) => this.options.soundEnabled = value );
 
 	var optMap = new SelectMenuItem( this.optionsMenu, "Map",
@@ -28,18 +30,16 @@ var StartMenu = function() {
 			{ name: "Map1", value: "TowerFall.json" },
 			{ name: "Map2", value: "TowerFall_2.json" }
 		],
-		( value ) => this.options.map = value );
+		( value ) => this.options.map = value, "Map2" );
 
-	var optCharName1 = new TextInputMenuItem( this.optionsMenu, "Player 1 name",
-		( value ) => this.options.playerOneName = value );
-	var optCharName2 = new TextInputMenuItem( this.optionsMenu, "Player 2 name",
-		( value ) => this.options.playerTwoName = value );
 
-	this.optionsMenu.addItem( optChar );
+	this.optionsMenu.addItem( optionsPlOneItem );
+	this.optionsMenu.addItem( optionsPlTwoItem );
+	//this.optionsMenu.addItem( optChar );
 	this.optionsMenu.addItem( optSound );
 	this.optionsMenu.addItem( optMap );
-	this.optionsMenu.addItem( optCharName1 );
-	this.optionsMenu.addItem( optCharName2 );
+	//this.optionsMenu.addItem( optCharName1 );
+	//this.optionsMenu.addItem( optCharName2 );
 
 	this.rootMenu.addItem( startItem );
 	this.rootMenu.addItem( optionsItem );
@@ -52,10 +52,32 @@ var StartMenu = function() {
  * @return {Menu[]}
  */
 StartMenu.prototype.getMenues = function() {
-	return [ this.rootMenu, this.optionsMenu ];
+	return [ this.rootMenu, this.optionsMenu, this.optionsPlOne.getMenu(), this.optionsPlTwo.getMenu() ];
 }
 
-StartMenu.getOptions = function() {
+StartMenu.prototype.getOptions = function() {
+	this.options.players = [
+		this.optionsPlOne.getOptions(),
+		this.optionsPlTwo.getOptions()
+	]
 	return this.options;
 }
 
+var PlayerMenu = function( parentMenu ) {
+	this.options = {};
+	this.optionsMenu = new Menu( parentMenu );
+	var nameItem = new TextInputMenuItem( this.optionsMenu, "Name",
+		( value ) => this.options.name = value );
+	var characterItem = new SelectMenuItem( this.optionsMenu, "Character", availableChars,
+		( value ) => this.options.character = value );
+	this.optionsMenu.addItem( nameItem );
+	this.optionsMenu.addItem( characterItem );
+}
+
+PlayerMenu.prototype.getMenu = function() {
+	return this.optionsMenu;
+}
+
+PlayerMenu.prototype.getOptions = function() {
+	return this.options;
+}

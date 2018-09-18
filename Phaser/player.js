@@ -1,4 +1,4 @@
-function createPlayer(game, playerNumber) {
+function createPlayer(game, name,  playerNumber) {
     var player;
     if (playerNumber===1) {
         player = game.physics.add.sprite(200, 450, 'cowboy');
@@ -63,10 +63,7 @@ function createPlayer(game, playerNumber) {
 
     var style = {font: "bold 16px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
 
-    if (playerNumber===1) {
-        player.name='PlayerOne';
-    }
-    else player.name='PlayerTwo';
+    player.name = name;
 
     player.playerText = Phaser.Display.Align.To.TopCenter(game.add.text(16, 16, player.name + player.ammo, style), player, 0, 0);
 
