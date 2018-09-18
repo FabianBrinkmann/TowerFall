@@ -246,7 +246,8 @@ TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
 		case 40:
 			return true;
 	}
-	return true;
+
+	return false;
 }
 
 inherit( TextInputMenuItem, MenuItem );

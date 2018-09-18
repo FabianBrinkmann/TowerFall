@@ -23,11 +23,23 @@ var StartMenu = function() {
 		( value ) => this.options.char = value );
 	var optSound = new OnOffMenuItem( this.optionsMenu, "Sound", ( value ) => this.options.soundEnabled = value );
 
-	var optCharName = new TextInputMenuItem( this.optionsMenu, "Player1 name", ( value ) => console.log( value ) );
+	var optMap = new SelectMenuItem( this.optionsMenu, "Map",
+		[
+			{ name: "Map1", value: "TowerFall.json" },
+			{ name: "Map2", value: "TowerFall_2.json" }
+		],
+		( value ) => this.options.map = value );
+
+	var optCharName1 = new TextInputMenuItem( this.optionsMenu, "Player 1 name",
+		( value ) => this.options.playerOneName = value );
+	var optCharName2 = new TextInputMenuItem( this.optionsMenu, "Player 2 name",
+		( value ) => this.options.playerTwoName = value );
 
 	this.optionsMenu.addItem( optChar );
 	this.optionsMenu.addItem( optSound );
-	this.optionsMenu.addItem( optCharName );
+	this.optionsMenu.addItem( optMap );
+	this.optionsMenu.addItem( optCharName1 );
+	this.optionsMenu.addItem( optCharName2 );
 
 	this.rootMenu.addItem( startItem );
 	this.rootMenu.addItem( optionsItem );
