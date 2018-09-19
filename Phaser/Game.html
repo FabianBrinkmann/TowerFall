@@ -40,10 +40,30 @@
     </form>
   </div>
 </div>
-<div id="ingame-overlay">
-
+<div id="ingame-overlay" style="display:none">
+  <div id="ingame-menu">
+    <div class="ingame-menu-item" onclick="rematch()">
+      <img src="assets/button_rewind.png" alt="rewind game" />
+      <p>Rematch</p>
+    </div>
+    <div class="ingame-menu-item" onclick="muteMusic()">
+      <img src="assets/button_music.png" alt="music on/off" />
+      <img src="assets/denied-symbol.png" style="display:none" id="music-muted" class="muted" />
+      <p>Music</p>
+    </div>
+    <div class="ingame-menu-item" onclick="muteSound()">
+      <img src="assets/button_sound.png" alt="sound on/off" />
+      <img src="assets/denied-symbol.png" style="display:none" id="sound-muted" class="muted" />
+      <p>Sound</p>
+    </div>
+    <div class="ingame-menu-item">
+      <img src="assets/button_rewind.png" alt="rewind game" />
+      <p>Change Level</p>
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="general.js"></script>
 <script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="ingame-menu.js"></script>
 </body>
 </html>
