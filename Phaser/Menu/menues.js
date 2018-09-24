@@ -30,10 +30,10 @@ var StartMenu = function() {
 
 	var optMap = new SelectMenuItem( this.optionsMenu, "Map",
 		[
-			{ name: "Map1", value: "TowerFall.json" },
-			{ name: "Map2", value: "TowerFall_2.json" }
+			{ name: "Map1", value: "map1" },
+			{ name: "Map2", value: "map2" }
 		],
-		( value ) => this.options.map = value, "Map2" );
+		( value ) => this.options.map = value, "Map1" );
 
 
 	this.optionsMenu.addItem( optionsPlOneItem );
