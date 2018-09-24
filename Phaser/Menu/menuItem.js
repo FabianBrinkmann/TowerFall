@@ -232,9 +232,10 @@ ActionMenuItem.prototype.onClick = function( event ) {
 inherit( ActionMenuItem, MenuItem );
 
 
-var TextInputMenuItem = function( menu, text, fnOnChange ) {
+var TextInputMenuItem = function( menu, text, fnOnChange, strDefault ) {
 	this.superClass.constructor.call( this, menu, text );
 	this.fnOnChange = fnOnChange;
+	this.defaultValue = strDefault;
 };
 
 TextInputMenuItem.prototype.createHTML = function() {
@@ -244,9 +245,11 @@ TextInputMenuItem.prototype.createHTML = function() {
 	this.right.setAttribute( "type", "text" );
 	this.right.classList.add( "option-values" );
 	this.right.classList.add( "option-input" );
+	this.right.value = this.defaultValue;
 	left.textContent = this.text;
 	this.DOMElem.appendChild( left );
 	this.DOMElem.appendChild( this.right );
+	this.fnOnChange(this.right.value);
 };
 
 TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {

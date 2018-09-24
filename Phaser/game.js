@@ -46,9 +46,13 @@ function gameAccessable(options) {
             this.load.image('arrowRight', 'assets/arrowRight.png');
             this.load.image('tiles', 'assets/tilemaps/tiles/TowerFall.png');
             this.load.tilemapTiledJSON({
-                key: 'map',
+                key: 'map1',
                 url: 'assets/tilemaps/maps/TowerFall.json'
             });
+            this.load.tilemapTiledJSON({
+				key: 'map2',
+				url: 'assets/tilemaps/maps/Towerfall_2.json'
+			})
             this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
             //audio
             this.load.audio('hit', 'assets/audio/hit.wav');
@@ -61,7 +65,7 @@ function gameAccessable(options) {
 //Erstellt die Umgebung und weiteres.
         function create (){
             // Create the level
-            map = this.make.tilemap({ key: 'map', tileWidth: 21, tileHeight: 21 });
+            map = this.make.tilemap({ key: options.map, tileWidth: 21, tileHeight: 21 });
 
             var tiles = map.addTilesetImage('tileset', 'tiles');
 
@@ -77,6 +81,14 @@ function gameAccessable(options) {
             soundFx.hitSound = this.sound.add('hit');
             soundFx.shootSound = this.sound.add('shoot');
             soundFx.jumpSound = this.sound.add('jump');
+
+            
+            if(!options.musicEnabled)
+            	muteMusic();
+
+            if(!options.soundEnabled)
+            	muteSoundFx();
+
             music.play();
 
 
@@ -158,6 +170,16 @@ function gameAccessable(options) {
             if (!music.mute) music.mute = true;
             else music.mute = false;
         }
+
+        function muteSoundFx(  ) {
+			for(let sound in soundFx)
+				soundFx[sound].mute = true;
+		}
+
+		function muteMusic(  ) {
+			music.mute = true;
+		}
+
     } else {
         location.reload();
     }
