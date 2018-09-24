@@ -78,13 +78,13 @@ function gameAccessable(options) {
             soundFx.shootSound = this.sound.add('shoot');
             soundFx.jumpSound = this.sound.add('jump');
 
-            /*
+            
             if(!options.musicEnabled)
             	muteMusic();
 
             if(!options.soundEnabled)
             	muteSoundFx();
-*/
+
             music.play();
 
 
