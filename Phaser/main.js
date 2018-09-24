@@ -1,12 +1,11 @@
-/*
-if( window.localStorage.getItem( 'token' ) != null ) {
-	gameAccessable();
-	document.getElementById( 'overlay' ).style.display = 'none';
+
+if( window.sessionStorage.getItem( 'token' ) != null ) {
+	//createMenu();
 }
 else {
 	showLoginForm();
 }
-*/
+
 
 function createMenu() {
 
@@ -17,5 +16,4 @@ function createMenu() {
 	var elem = manager.getElement();
 	document.getElementById( "overlay" ).appendChild( elem );
 }
-
 createMenu();

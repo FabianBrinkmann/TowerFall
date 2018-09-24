@@ -16,7 +16,8 @@ var StartMenu = function() {
 	var optionsItem = new SubMenuItem( this.rootMenu, "Options", this.optionsMenu );
 
 	var logoutItem = new ActionMenuItem( this.rootMenu, "Logout", () => {
-
+		window.sessionStorage.clear();
+		showLoginForm();
 	} )
 
 
