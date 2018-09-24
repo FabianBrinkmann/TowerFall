@@ -77,6 +77,14 @@ function gameAccessable(options) {
             soundFx.hitSound = this.sound.add('hit');
             soundFx.shootSound = this.sound.add('shoot');
             soundFx.jumpSound = this.sound.add('jump');
+
+            /*
+            if(!options.musicEnabled)
+            	muteMusic();
+
+            if(!options.soundEnabled)
+            	muteSoundFx();
+*/
             music.play();
 
 
@@ -158,6 +166,16 @@ function gameAccessable(options) {
             if (!music.mute) music.mute = true;
             else music.mute = false;
         }
+
+        function muteSoundFx(  ) {
+			for(let sound in soundFx)
+				soundFx[sound].mute = true;
+		}
+
+		function muteMusic(  ) {
+			music.mute = true;
+		}
+
     } else {
         location.reload();
     }

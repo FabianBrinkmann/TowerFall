@@ -4,13 +4,13 @@ var StartMenu = function() {
 
 	this.rootMenu = new Menu( null );
 	this.optionsMenu = new Menu( this.rootMenu );
-	this.optionsPlOne = new PlayerMenu( this.optionsMenu );
-	this.optionsPlTwo = new PlayerMenu( this.optionsMenu );
+	this.optionsPlOne = new PlayerMenu( this.optionsMenu, { name: "Player 1" } );
+	this.optionsPlTwo = new PlayerMenu( this.optionsMenu, { name: "Player 2" } );
 
 	var startItem = new ActionMenuItem( this.rootMenu, "Start", () => {
 		document.getElementById( "overlay" ).style.display = "none";
-		console.log(this.getOptions());
-		gameAccessable(this.getOptions());
+		console.log( this.getOptions() );
+		gameAccessable( this.getOptions() );
 	} );
 
 	var optionsItem = new SubMenuItem( this.rootMenu, "Options", this.optionsMenu );
@@ -24,7 +24,9 @@ var StartMenu = function() {
 	var optionsPlOneItem = new SubMenuItem( this.optionsMenu, "Player 1", this.optionsPlOne.getMenu() );
 	var optionsPlTwoItem = new SubMenuItem( this.optionsMenu, "Player 2", this.optionsPlTwo.getMenu() );
 
-	var optSound = new OnOffMenuItem( this.optionsMenu, "Sound", ( value ) => this.options.soundEnabled = value );
+	var optMusic = new OnOffMenuItem( this.optionsMenu, "Music", ( value ) => this.options.musicEnabled = value );
+	var optSound = new OnOffMenuItem( this.optionsMenu, "Sound Effects", ( value ) => this.options.soundEnabled = value );
+
 
 	var optMap = new SelectMenuItem( this.optionsMenu, "Map",
 		[
@@ -36,11 +38,9 @@ var StartMenu = function() {
 
 	this.optionsMenu.addItem( optionsPlOneItem );
 	this.optionsMenu.addItem( optionsPlTwoItem );
-	//this.optionsMenu.addItem( optChar );
+	this.optionsMenu.addItem( optMusic );
 	this.optionsMenu.addItem( optSound );
 	this.optionsMenu.addItem( optMap );
-	//this.optionsMenu.addItem( optCharName1 );
-	//this.optionsMenu.addItem( optCharName2 );
 
 	this.rootMenu.addItem( startItem );
 	this.rootMenu.addItem( optionsItem );
@@ -64,13 +64,13 @@ StartMenu.prototype.getOptions = function() {
 	return this.options;
 }
 
-var PlayerMenu = function( parentMenu ) {
+var PlayerMenu = function( parentMenu, objDefaults ) {
 	this.options = {};
 	this.optionsMenu = new Menu( parentMenu );
 	var nameItem = new TextInputMenuItem( this.optionsMenu, "Name",
-		( value ) => this.options.name = value );
+		( value ) => this.options.name = value, objDefaults.name );
 	var characterItem = new SelectMenuItem( this.optionsMenu, "Character", availableChars,
-		( value ) => this.options.character = value );
+		( value ) => this.options.character = value, objDefaults.name );
 	this.optionsMenu.addItem( nameItem );
 	this.optionsMenu.addItem( characterItem );
 }
