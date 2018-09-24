@@ -1,6 +1,6 @@
 var StartMenu = function() {
 
-	this.options = {};
+	this.options = window.localStorage.getItem( "options" ) || {};
 
 	this.rootMenu = new Menu( null );
 	this.optionsMenu = new Menu( this.rootMenu );
@@ -8,6 +8,7 @@ var StartMenu = function() {
 	this.optionsPlTwo = new PlayerMenu( this.optionsMenu, { name: "Player 2" } );
 
 	var startItem = new ActionMenuItem( this.rootMenu, "Start", () => {
+		window.localStorage.setItem( "options", this.options );
 		document.getElementById( "overlay" ).style.display = "none";
 		console.log( this.getOptions() );
 		gameAccessable( this.getOptions() );
@@ -25,7 +26,10 @@ var StartMenu = function() {
 	var optionsPlOneItem = new SubMenuItem( this.optionsMenu, "Player 1", this.optionsPlOne.getMenu() );
 	var optionsPlTwoItem = new SubMenuItem( this.optionsMenu, "Player 2", this.optionsPlTwo.getMenu() );
 
-	var optMusic = new OnOffMenuItem( this.optionsMenu, "Music", ( value ) => this.options.musicEnabled = value );
+	var optMusic = new OnOffMenuItem( this.optionsMenu,
+		"Music",
+		( value ) => this.options.musicEnabled = value,
+		this.options.musicEnabled);
 	var optSound = new OnOffMenuItem( this.optionsMenu, "Sound Effects", ( value ) => this.options.soundEnabled = value );
 
 

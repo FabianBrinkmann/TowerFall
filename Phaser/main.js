@@ -1,12 +1,3 @@
-
-if( window.sessionStorage.getItem( 'token' ) != null ) {
-	//createMenu();
-}
-else {
-	showLoginForm();
-}
-
-
 function createMenu() {
 
 	var startMenu = new StartMenu();
@@ -28,3 +19,11 @@ function showMenu(){
 }
 
 createMenu();
+
+
+if( window.sessionStorage.getItem( 'token' ) != null ) {
+	showMenu();
+}
+else {
+	showLoginForm();
+}

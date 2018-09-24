@@ -153,13 +153,13 @@ inherit( SelectMenuItem, MenuItem );
  * @type Function
  * @constructor
  */
-var OnOffMenuItem = function( menu, text, fnOnChange ) {
+var OnOffMenuItem = function( menu, text, fnOnChange, defaultValue ) {
 	return new SelectMenuItem( menu, text,
 		[
 			{ name: "On", value: true },
 			{ name: "Off", value: false }
 		],
-		fnOnChange );
+		fnOnChange, defaultValue );
 };
 
 inherit( OnOffMenuItem, SelectMenuItem );
