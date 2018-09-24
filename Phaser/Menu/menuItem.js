@@ -69,10 +69,14 @@ var SelectMenuItem = function( menu, text, options, fnOnChange, defaultValue ) {
 	this.options = options;
 	this.nCurrentOption = 0;
 	this.fnOnChange = fnOnChange;
-	if( defaultValue ) {
+	if( defaultValue!== null && defaultValue !== undefined ) {
 		var index = this.options.map( ( obj ) => obj.name ).indexOf( defaultValue );
 		if( index >= 0 ) {
 			this.nCurrentOption = index;
+		} else {
+			index = this.options.map( ( obj ) => obj.value ).indexOf( defaultValue );
+			if( index >= 0 )
+				this.nCurrentOption = index;
 		}
 
 	}
@@ -249,7 +253,7 @@ TextInputMenuItem.prototype.createHTML = function() {
 	left.textContent = this.text;
 	this.DOMElem.appendChild( left );
 	this.DOMElem.appendChild( this.right );
-	this.fnOnChange(this.right.value);
+	this.fnOnChange( this.right.value );
 };
 
 TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
