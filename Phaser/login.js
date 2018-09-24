@@ -9,6 +9,8 @@ function logIn() {
 		if( window.sessionStorage.getItem( 'token' ) != null ) {
 			//createMenu();
 			document.getElementById( 'first-login' ).style.display = 'none';
+			showMenu();
+			hideLoginForm();
 		}
 	}, function( failedLogin ) {
 		alert( 'Login failed. Please try again.' );
@@ -22,6 +24,7 @@ function registration() {
 	ServerConnection.register( username, password, function( response ) {
 		window.sessionStorage.setItem( 'token', JSON.parse( response.response ).token );
 		hideRegistrationForm();
+		showLoginForm();
 		//createMenu();
 	}, function( failedRegistration ) {
 		alert( 'Registration failed. Username may already been taken. Please try again.' );

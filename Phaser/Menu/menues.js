@@ -18,6 +18,7 @@ var StartMenu = function() {
 	var logoutItem = new ActionMenuItem( this.rootMenu, "Logout", () => {
 		window.sessionStorage.clear();
 		showLoginForm();
+		hideMenu();
 	} )
 
 
