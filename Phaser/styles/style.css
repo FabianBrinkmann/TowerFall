@@ -78,6 +78,7 @@ input {
     margin-right: auto;
     margin-bottom: 10px;
     text-align: center;
+    cursor: pointer;
 }
 
 .menu-item.selected{

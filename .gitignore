@@ -1,4 +1,4 @@
-﻿/.vs
+/.vs
 /Server/.vs/Server
 /Server/Server/obj
 /Server/Server/bin
@@ -17,3 +17,4 @@
 /Server/Server/Properties/PublishProfiles
 /Phaser/.idea/vcs.xml
 /Phaser/.idea/codeStyles/codeStyleConfig.xml
+yarn.lock

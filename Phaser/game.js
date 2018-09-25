@@ -4,6 +4,7 @@ var music;
 var soundFx = {};
 var groundLayer;
 var gameOver = false;
+var getScene;
 
 function gameAccessable(options) {
     if(window.sessionStorage.getItem('token') != null) {
@@ -27,9 +28,15 @@ function gameAccessable(options) {
             }
         };
 
+        getScene = function() {
+            this.scene.manager.bootScene(this);
+        };
+
         var playerList;
         var map;
         var cursors;
+        //var ammunition;
+
 
         var game = new Phaser.Game(config);
         var skyLayer;
@@ -159,24 +166,14 @@ function gameAccessable(options) {
             return result;
         }
 
-        function changeMuteSoundFx() {
-            for (let sound in soundFx){
-                if (!soundFx[sound].mute)soundFx[sound].mute=true;
-                else soundFx[sound].mute=false;
-            }
-        }
 
-        function changeMuteMusic() {
-            if (!music.mute) music.mute = true;
-            else music.mute = false;
-        }
 
-        function muteSoundFx(  ) {
+        function muteSoundFx() {
 			for(let sound in soundFx)
 				soundFx[sound].mute = true;
 		}
 
-		function muteMusic(  ) {
+		function muteMusic() {
 			music.mute = true;
 		}
 
@@ -193,8 +190,19 @@ function gameAccessable(options) {
     };
 }
 
+function changeMuteSoundFx() {
+    for (let sound in soundFx){
+        if (!soundFx[sound].mute)soundFx[sound].mute=true;
+        else soundFx[sound].mute=false;
+    }
+}
+
+function changeMuteMusic() {
+    if (!music.mute) music.mute = true;
+    else music.mute = false;
+}
 
 function restartGame() {
-    this.scene.restart();
+    getScene();
 }
 

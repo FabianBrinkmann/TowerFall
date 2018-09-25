@@ -8,6 +8,7 @@ function toggleIngameMenu() {
 }
 
 function muteMusic() {
+    changeMuteMusic();
     const muteSymbol = document.getElementById('music-muted');
     if (muteSymbol.style.display === 'none') {
         muteSymbol.style.display = 'block';
@@ -17,6 +18,7 @@ function muteMusic() {
 }
 
 function muteSound() {
+    changeMuteSoundFx();
     const muteSymbol = document.getElementById('sound-muted');
     if (muteSymbol.style.display === 'none') {
         muteSymbol.style.display = 'block';
