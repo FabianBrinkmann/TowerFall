@@ -51,7 +51,7 @@ function gameAccessable(options) {
             });
             this.load.tilemapTiledJSON({
 				key: 'map2',
-				url: 'assets/tilemaps/maps/Towerfall_2.json'
+				url: 'assets/tilemaps/maps/TowerFall_2.json'
 			})
             this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
             //audio
