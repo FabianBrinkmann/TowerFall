@@ -69,10 +69,14 @@ var SelectMenuItem = function( menu, text, options, fnOnChange, defaultValue ) {
 	this.options = options;
 	this.nCurrentOption = 0;
 	this.fnOnChange = fnOnChange;
-	if( defaultValue ) {
+	if( defaultValue !== null && defaultValue !== undefined ) {
 		var index = this.options.map( ( obj ) => obj.name ).indexOf( defaultValue );
 		if( index >= 0 ) {
 			this.nCurrentOption = index;
+		} else {
+			index = this.options.map( ( obj ) => obj.value ).indexOf( defaultValue );
+			if( index >= 0 )
+				this.nCurrentOption = index;
 		}
 
 	}
@@ -153,13 +157,13 @@ inherit( SelectMenuItem, MenuItem );
  * @type Function
  * @constructor
  */
-var OnOffMenuItem = function( menu, text, fnOnChange ) {
+var OnOffMenuItem = function( menu, text, fnOnChange, defaultValue ) {
 	return new SelectMenuItem( menu, text,
 		[
 			{ name: "On", value: true },
 			{ name: "Off", value: false }
 		],
-		fnOnChange );
+		fnOnChange, defaultValue );
 };
 
 inherit( OnOffMenuItem, SelectMenuItem );
@@ -249,11 +253,16 @@ TextInputMenuItem.prototype.createHTML = function() {
 	left.textContent = this.text;
 	this.DOMElem.appendChild( left );
 	this.DOMElem.appendChild( this.right );
-	this.fnOnChange(this.right.value);
+	this.DOMElem.onkeyup = this.onKeyUp.bind( this );
+	this.fnOnChange( this.right.value );
 };
 
 TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
-	this.fnOnChange( this.right.value );
+	//this.fnOnChange( this.right.value );
 };
+
+TextInputMenuItem.prototype.onKeyUp = function( keyEvent ) {
+	this.fnOnChange( this.right.value );
+}
 
 inherit( TextInputMenuItem, MenuItem );
