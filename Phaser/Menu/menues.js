@@ -75,9 +75,13 @@ var PlayerMenu = function( parentMenu, objDefaults ) {
 	this.options = objDefaults;
 	this.optionsMenu = new Menu( parentMenu );
 	var nameItem = new TextInputMenuItem( this.optionsMenu, "Name",
-		( value ) => this.options.name = value, this.options.name );
+		( value ) => {
+			this.options.name = value;
+		}, this.options.name );
 	var characterItem = new SelectMenuItem( this.optionsMenu, "Character", availableChars,
-		( value ) => this.options.character = value, this.options.character );
+		( value ) => {
+			this.options.character = value;
+		}, this.options.character );
 	this.optionsMenu.addItem( nameItem );
 	this.optionsMenu.addItem( characterItem );
 }

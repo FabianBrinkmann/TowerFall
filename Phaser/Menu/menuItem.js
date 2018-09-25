@@ -69,7 +69,7 @@ var SelectMenuItem = function( menu, text, options, fnOnChange, defaultValue ) {
 	this.options = options;
 	this.nCurrentOption = 0;
 	this.fnOnChange = fnOnChange;
-	if( defaultValue!== null && defaultValue !== undefined ) {
+	if( defaultValue !== null && defaultValue !== undefined ) {
 		var index = this.options.map( ( obj ) => obj.name ).indexOf( defaultValue );
 		if( index >= 0 ) {
 			this.nCurrentOption = index;
@@ -253,11 +253,16 @@ TextInputMenuItem.prototype.createHTML = function() {
 	left.textContent = this.text;
 	this.DOMElem.appendChild( left );
 	this.DOMElem.appendChild( this.right );
+	this.DOMElem.onkeyup = this.onKeyUp.bind( this );
 	this.fnOnChange( this.right.value );
 };
 
 TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
-	this.fnOnChange( this.right.value );
+	//this.fnOnChange( this.right.value );
 };
+
+TextInputMenuItem.prototype.onKeyUp = function( keyEvent ) {
+	this.fnOnChange( this.right.value );
+}
 
 inherit( TextInputMenuItem, MenuItem );
