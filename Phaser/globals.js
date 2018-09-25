@@ -1,4 +1,4 @@
 var availableChars = [
 	{ name: "Cowboy", value: "cowboy" },
-	{ name: "Dude", value: "dude" }
+	{ name: "Indian", value: "indian" }
 ]

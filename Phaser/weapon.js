@@ -3,11 +3,23 @@
 //shootingPlayer = der Spieler der schießt.
 //imageName = das Bild das für die Munition benutzt werden soll.
 //direktion = Die Richtung in die geschossen werden soll.
-function shoot(shootingPlayer, imageName, direktion)
+function shoot(shootingPlayer, direktion)
 {
+    var imageName
+
     if(shootingPlayer.ammo > 0)
     {
-        soundFx.shootSound.play();
+        if (shootingPlayer.options.character==="indian") {
+            imageName="arrow"+direktion;
+            soundFx.arrowShotSound.play();
+
+        }
+        else {
+            imageName = "bullet" + direktion;
+            soundFx.bulletShotSound.play();
+        }
+
+
         shootingPlayer.ammo += - 1;
         var ammo = ammunition.create(16, 16, imageName);
         ammo.setBounce(0);
@@ -19,7 +31,7 @@ function shoot(shootingPlayer, imageName, direktion)
 
         switch (direktion)
         {
-            case 'right':
+            case 'Right':
                 ammo.setVelocity(500, -80);
                 Phaser.Display.Align.To.RightCenter(ammo, shootingPlayer, -50, 10);
                 break;

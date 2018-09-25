@@ -3,6 +3,7 @@ var ammunition;
 var music;
 var soundFx = {};
 var groundLayer;
+var gameOver = false;
 
 function gameAccessable(options) {
     if(window.sessionStorage.getItem('token') != null) {
@@ -29,8 +30,6 @@ function gameAccessable(options) {
         var playerList;
         var map;
         var cursors;
-        //var ammunition;
-        var gameOver = false;
 
         var game = new Phaser.Game(config);
         var skyLayer;
@@ -43,7 +42,9 @@ function gameAccessable(options) {
             this.load.image('arrowUp', 'assets/arrowUp.png');
             this.load.image('arrowDown', 'assets/arrowDown.png');
             this.load.image('arrowLeft', 'assets/arrowLeft.png');
+            this.load.image('bulletLeft', 'assets/bulletLeft.png');
             this.load.image('arrowRight', 'assets/arrowRight.png');
+            this.load.image('bulletRight', 'assets/bulletRight.png');
             this.load.image('tiles', 'assets/tilemaps/tiles/TowerFall.png');
             this.load.tilemapTiledJSON({
                 key: 'map1',
@@ -54,9 +55,12 @@ function gameAccessable(options) {
 				url: 'assets/tilemaps/maps/TowerFall_2.json'
 			})
             this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
+            this.load.spritesheet('indian', 'assets/indian.png', { frameWidth: 30, frameHeight: 59 });
+
             //audio
             this.load.audio('hit', 'assets/audio/hit.wav');
-            this.load.audio('shoot', 'assets/audio/shoot.mp3');
+            this.load.audio('arrowShot', 'assets/audio/arrowShot.wav');
+            this.load.audio('bulletShot', 'assets/audio/bulletShot.mp3');
             this.load.audio('jump', 'assets/audio/jump.mp3');
             this.load.audio('music', 'assets/audio/music.mp3');
 
@@ -79,7 +83,8 @@ function gameAccessable(options) {
             music = this.sound.add('music');
             music.setLoop(true);
             soundFx.hitSound = this.sound.add('hit');
-            soundFx.shootSound = this.sound.add('shoot');
+            soundFx.bulletShotSound = this.sound.add('bulletShot');
+            soundFx.arrowShotSound = this.sound.add('arrowShot');
             soundFx.jumpSound = this.sound.add('jump');
 
 
@@ -103,7 +108,7 @@ function gameAccessable(options) {
             playerList = new Array(2);
             var i;
             for (i = 0; i < playerList.length; i++) {
-                playerList[i] = createPlayer(this, options.players[i].name, 1+i);
+                playerList[i] = createPlayer(this, options.players[i], 1+i);
                 playerList[i].cursorLeft = playerCursors[i][0];
                 playerList[i].cursorRight = playerCursors[i][1];
                 playerList[i].cursorUp = playerCursors[i][2];

@@ -1,15 +1,19 @@
-function createPlayer(game, name,  playerNumber) {
+function createPlayer(game, playerOptions,  playerNumber) {
     var player;
+
+    var character = playerOptions.character
+
     if (playerNumber===1) {
-        player = game.physics.add.sprite(200, 450, 'cowboy');
+        player = game.physics.add.sprite(200, 450, character);
         player.right=true;
         player.left=false;
     }else {
-        player = game.physics.add.sprite(400, 450, 'cowboy');
+        player = game.physics.add.sprite(400, 450, character);
         player.right=false;
         player.left=true;
     }
 
+    player.options=playerOptions;
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0);
@@ -20,40 +24,40 @@ function createPlayer(game, name,  playerNumber) {
 
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
-            key: 'left',
-            frames: game.anims.generateFrameNumbers('cowboy', {start: 1, end: 3}),
+            key: character+'Left',
+            frames: game.anims.generateFrameNumbers(character, {start: 1, end: 3}),
             frameRate: 10,
             repeat: -1
         });
 
     game.anims.create({
-            key: 'right',
-            frames: game.anims.generateFrameNumbers('cowboy', {start: 6, end: 8}),
+            key: character+'Right',
+            frames: game.anims.generateFrameNumbers(character, {start: 6, end: 8}),
             frameRate: 10,
             repeat: -1
         });
 
     game.anims.create({
-            key: 'lookLeft',
-            frames: [{key: 'cowboy', frame: 4}],
+            key: character+'LookLeft',
+            frames: [{key: character, frame: 4}],
             frameRate: 20
         });
 
     game.anims.create({
-            key: 'lookRight',
-            frames: [{key: 'cowboy', frame: 5}],
+            key: character+'LookRight',
+            frames: [{key: character, frame: 5}],
             frameRate: 20
         });
 
     game.anims.create({
-        key: 'shootLeft',
-        frames: [{key: 'cowboy', frame: 0}],
+        key: character+'ShootLeft',
+        frames: [{key: character, frame: 0}],
         frameRate: 20
     });
 
     game.anims.create({
-        key: 'shootRight',
-        frames: [{key: 'cowboy', frame: 9}],
+        key: character+'ShootRight',
+        frames: [{key: character, frame: 9}],
         frameRate: 20
     });
 
@@ -63,9 +67,9 @@ function createPlayer(game, name,  playerNumber) {
 
     var style = {font: "bold 16px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
 
-    player.name = name;
+    player.name = playerOptions.name;
 
-    player.playerText = Phaser.Display.Align.To.TopCenter(game.add.text(16, 16, player.name + player.ammo, style), player, 0, 0);
+    player.playerText = Phaser.Display.Align.To.TopCenter(game.add.text(16, 16, playerOptions.name + player.ammo, style), player, 0, 0);
 
     return player;
 }
@@ -75,12 +79,14 @@ function createPlayer(game, name,  playerNumber) {
 
 function updatePlayer(player) {
 
+    var character = player.options.character;
+
     if (player.cursorLeft.isDown)
     {
         player.hasJustShot=false;
         player.setVelocityX(-160);
 
-        player.anims.play('left', true);
+        player.anims.play(character+'Left', true);
         player.left = true;
         player.right = false;
     }
@@ -89,7 +95,7 @@ function updatePlayer(player) {
         player.hasJustShot=false;
         player.setVelocityX(160);
 
-        player.anims.play('right', true);
+        player.anims.play(character+'Right', true);
         player.right = true;
         player.left = false;
     }
@@ -97,11 +103,11 @@ function updatePlayer(player) {
     {
         if (player.right && !player.hasJustShot)
         {
-            player.anims.play('lookRight', true);
+            player.anims.play(character+'LookRight', true);
         }
         else if (player.left && !player.hasJustShot)
         {
-            player.anims.play('lookLeft', true);
+            player.anims.play(character+ 'LookLeft', true);
         }
 
         player.setVelocityX(0);
@@ -112,14 +118,14 @@ function updatePlayer(player) {
         player.hasJustShot=true;
         if (player.left)
         {
-            player.anims.play('shootLeft');
-            shoot(player, 'arrowLeft', 'left');
+            player.anims.play(character+'ShootLeft');
+            shoot(player, 'Left');
             justShotTimer(player);
         }
         else if (player.right)
         {
-            player.anims.play('shootRight');
-            shoot(player, 'arrowRight', 'right');
+            player.anims.play(character+'ShootRight');
+            shoot(player, 'Right');
             justShotTimer(player);
         }
     }
