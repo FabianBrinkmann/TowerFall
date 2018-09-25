@@ -1,6 +1,6 @@
 var StartMenu = function() {
 
-	this.options = JSON.parse( window.localStorage.getItem( "options" ) ) || {};
+	this.options = JSON.parse( window.localStorage.getItem( "options" ) ) || { players: [ {}, {} ] };
 
 	this.rootMenu = new Menu( null );
 	this.optionsMenu = new Menu( this.rootMenu );
