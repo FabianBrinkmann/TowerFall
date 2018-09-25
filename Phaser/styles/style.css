@@ -3,10 +3,13 @@ body {
     font-family: 'Oswald', sans-serif;
 }
 
-#overlay {
+#overlay, #ingame-overlay {
     position: absolute;
     width: 1050px;
     height: 700px;
+}
+
+#overlay {
     background-image: url('../assets/loginbackground.jpg');
     background-position-x: -100px;
 }
@@ -107,3 +110,37 @@ input {
     content:":";
 }
 
+/* Ingame Menu */
+
+#ingame-overlay {
+    background-color:rgba(15, 15, 15, 0.6);
+}
+
+#ingame-menu {
+    margin: auto auto;
+    width: 60%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.ingame-menu-item {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ingame-menu-item p {
+    font-size: 26px;
+    color: #fff;
+    margin: 10px 0 20px;
+}
+
+.muted {
+    position: absolute;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    right: 0;
+}
