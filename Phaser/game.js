@@ -2,6 +2,7 @@ var ammunition;
 
 var music;
 var soundFx = {};
+var groundLayer;
 
 function gameAccessable(options) {
     if(window.sessionStorage.getItem('token') != null) {
@@ -32,7 +33,6 @@ function gameAccessable(options) {
         var gameOver = false;
 
         var game = new Phaser.Game(config);
-        var groundLayer;
         var skyLayer;
         var platformLayer;
 
@@ -51,7 +51,7 @@ function gameAccessable(options) {
             });
             this.load.tilemapTiledJSON({
 				key: 'map2',
-				url: 'assets/tilemaps/maps/Towerfall_2.json'
+				url: 'assets/tilemaps/maps/TowerFall_2.json'
 			})
             this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
             //audio
@@ -82,7 +82,7 @@ function gameAccessable(options) {
             soundFx.shootSound = this.sound.add('shoot');
             soundFx.jumpSound = this.sound.add('jump');
 
-            
+
             if(!options.musicEnabled)
             	muteMusic();
 
@@ -111,26 +111,21 @@ function gameAccessable(options) {
                 this.physics.add.collider(playerList[i], platformLayer, null, collideInvokerPlayerPlatform, this);
                 this.physics.add.collider(playerList[i], groundLayer);
                 this.physics.add.collider(playerList[i], ammunition, hitAmmo, null, this);
-                this.physics.add.overlap(playerList[i], ammunition, hitAmmo, null, this);
+                this.physics.add.overlap(playerList[i], ammunition, hitAmmo, overlapAmmoInvoker, this);
             }
-
 
             this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
             this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
-            // var controlConfig = {
-            //     camera: this.cameras.main,
-            //     left: cursors.left,
-            //     right: cursors.right,
-            //     up: cursors.up,
-            //     down: cursors.down,
-            //     speed: 0.2
-            // };
-            //controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
-
         }
 
-        function h (p, d){
-            console.log("t");
+        function overlapAmmoInvoker (player, ammo)
+        {
+          var result = true;
+          if(ammo.player === player)
+          {
+            result = false;
+          }
+          return result;
         }
 
         //Aktualisiert das Spiel
@@ -184,7 +179,3 @@ function gameAccessable(options) {
         location.reload();
     }
 }
-
-//Wird ausgelöst wenn ein Spieler einen Tile berührt.
-//player = der Spieler
-//tile = der Tile
