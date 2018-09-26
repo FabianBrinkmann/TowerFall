@@ -8,8 +8,11 @@ var groundLayer;
 var gameOver = false;
 var game;
 
+// If the user has got a token saved, the game will start
 function gameAccessable(options) {
     if(window.sessionStorage.getItem('token') != null) {
+
+        // Defines the main variables for the game like width, height, gravity and physic engine we want to use
         var config = {
             type: Phaser.AUTO,
             width: 1050,
@@ -37,7 +40,7 @@ function gameAccessable(options) {
         var skyLayer;
         var platformLayer;
 
-//Lädt dinge wie z.B. Bilder.
+        // Loads images and audio files
         function preload ()
         {
             // map graphics
@@ -63,7 +66,7 @@ function gameAccessable(options) {
             this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
             this.load.spritesheet('indian', 'assets/indian.png', { frameWidth: 30, frameHeight: 59 });
 
-            //audio
+            // audio
             this.load.audio('hit', 'assets/audio/hit.wav');
             this.load.audio('arrowShot', 'assets/audio/arrowShot.wav');
             this.load.audio('bulletShot', 'assets/audio/bulletShot.mp3');
@@ -72,7 +75,7 @@ function gameAccessable(options) {
 
         }
 
-//Erstellt die Umgebung und weiteres.
+        // Sets the environment and sound. Simply everything that won't change through out the game
         function create (){
             // Create the level
             map = this.make.tilemap({ key: options.map, tileWidth: 21, tileHeight: 21 });
@@ -85,7 +88,7 @@ function gameAccessable(options) {
             groundLayer.setCollisionBetween(0, 1848);
             platformLayer.setCollisionBetween(0, 1848);
 
-            //sound / music settings and play
+            // sound / music settings and play
             music = this.sound.add('music');
             music.setLoop(true);
             soundFx.hitSound = this.sound.add('hit');
@@ -131,7 +134,7 @@ function gameAccessable(options) {
             spawnItem('ammo', 100, 100, 30000);
         }
 
-        //Aktualisiert das Spiel
+        // Updates the game continuously
         function update (time, delta)
         {
             if (gameOver)
@@ -172,7 +175,6 @@ function gameAccessable(options) {
         }
 
         function collideInvokerPlayerPlatform (player, tile) {
-            //console.log(player);
             var result = true;
             if (player.body.velocity.y < 0)
             {
@@ -194,7 +196,7 @@ function gameAccessable(options) {
         location.reload();
     }
 
-// Displays ingame menu
+    // Displays ingame menu
     document.onkeydown = function(evt) {
         evt = evt || window.event;
         if (evt.keyCode === 27) {
