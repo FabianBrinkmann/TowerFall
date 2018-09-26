@@ -1,3 +1,4 @@
+var options;
 var StartMenu = function() {
 
 	this.options = JSON.parse( window.localStorage.getItem( "options" ) ) ||
@@ -17,6 +18,7 @@ var StartMenu = function() {
 		window.localStorage.setItem( "options", JSON.stringify( this.getOptions() ) );
 		document.getElementById( "overlay" ).style.display = "none";
 		console.log( this.getOptions() );
+		options = this.options;
 		gameAccessable( this.getOptions() );
 	} );
 
