@@ -130,8 +130,11 @@ function gameAccessable(options) {
             this.physics.add.collider(items, platformLayer);
             this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
             this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
-            spawnItem('heart', 525, 100, 15000);
-            spawnItem('ammo', 100, 100, 30000);
+
+            // Sets the interval how often an item is spawned
+            setInterval( () => {
+                spawnItem();
+            }, 20000);
         }
 
         // Updates the game continuously
@@ -231,4 +234,5 @@ function restartGame() {
   game.destroy(true);
   gameAccessable(options);
   toggleIngameMenu();
+  itemAvailable = false;
 }
