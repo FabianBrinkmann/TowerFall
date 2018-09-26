@@ -5,7 +5,6 @@ function logIn() {
 	const password = document.querySelectorAll( '[type="password"]' )[ 0 ].value;
 	ServerConnection.login( username, password, function( response ) {
 		window.sessionStorage.setItem( 'token', JSON.parse( response.response ).token );
-		console.log( window.sessionStorage.getItem( 'token' ) );
 		if( window.sessionStorage.getItem( 'token' ) != null ) {
 			//createMenu();
 			document.getElementById( 'first-login' ).style.display = 'none';
@@ -53,3 +52,14 @@ function hideLoginForm() {
 function clearStorage() {
 	sessionStorage.clear();
 }
+
+document.onkeydown = function(evt) {
+	evt = evt || window.event;
+	if (evt.keyCode === 13) {
+		if (document.getElementById('first-login').style.display === 'flex') {
+			logIn();
+		} else if (document.getElementById('registration').style.display === 'flex') {
+			registration();
+		}
+	}
+};
