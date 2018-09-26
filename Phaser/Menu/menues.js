@@ -44,7 +44,8 @@ var StartMenu = function() {
 	var optMap = new SelectMenuItem( this.optionsMenu, "Map",
 		[
 			{ name: "Map1", value: "map1" },
-			{ name: "Map2", value: "map2" }
+			{ name: "Map2", value: "map2" },
+			{ name: "Map3", value: "map3" }
 		],
 		( value ) => this.options.map = value, this.options.map );
 
