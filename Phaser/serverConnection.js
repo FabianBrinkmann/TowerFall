@@ -3,7 +3,7 @@
  */
 var ServerConnection = (function(){
 
-    var serverBase = "https://localhost:44316/api/v1/";
+    var serverBase = "http://localhost:44316/api/v1/";
 
     var sc = function(){
         this.token = null;

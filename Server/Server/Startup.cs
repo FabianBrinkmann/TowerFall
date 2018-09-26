@@ -17,6 +17,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Server
 {
@@ -35,6 +36,7 @@ namespace Server
 		public void ConfigureServices( IServiceCollection services )
 		{
 			services.AddSingleton<IConfiguration>( Configuration );
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
 			.AddJwtBearer( options =>
 			{
@@ -109,7 +111,7 @@ namespace Server
 			}
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
-			app.UseCors();
+			//app.UseCors();
 			app.UseCors( CORSPOLICY );
 			app.UseMvc();
 
