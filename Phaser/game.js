@@ -1,11 +1,11 @@
+// Initiating global variables
+
 var ammunition;
 var items;
-
 var music;
 var soundFx = {};
 var groundLayer;
 var gameOver = false;
-var getScene;
 var game;
 
 function gameAccessable(options) {
@@ -29,17 +29,11 @@ function gameAccessable(options) {
             }
         };
 
-        getScene = function() {
-            this.scene.manager.bootScene(this);
-        };
+        game = new Phaser.Game(config);
 
         var playerList;
         var map;
         var cursors;
-        //var ammunition;
-
-
-        game = new Phaser.Game(config);
         var skyLayer;
         var platformLayer;
 
@@ -108,9 +102,6 @@ function gameAccessable(options) {
 
             music.play();
 
-
-            //this.cameras.main.setBounds(0, 0, platforms.widthInPixels, platforms.heightInPixels);
-
             cursors = this.input.keyboard.createCursorKeys();
             ammunition = this.physics.add.group();
             items = this.physics.add.group();
@@ -119,8 +110,7 @@ function gameAccessable(options) {
                 new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
             );
             playerList = new Array(2);
-            var i;
-            for (i = 0; i < playerList.length; i++) {
+            for (var i = 0; i < playerList.length; i++) {
                 playerList[i] = createPlayer(this, options.players[i], 1+i);
                 playerList[i].cursorLeft = playerCursors[i][0];
                 playerList[i].cursorRight = playerCursors[i][1];
@@ -146,12 +136,10 @@ function gameAccessable(options) {
         {
             if (gameOver)
             {
-                music.mute=true;
+                music.mute = true;
                 return
             }
-
-            var i;
-            for (i = 0; i < playerList.length; i++) {
+            for (var i = 0; i < playerList.length; i++) {
                 updatePlayer(playerList[i]);
             }
 
@@ -170,7 +158,7 @@ function gameAccessable(options) {
         function collideAmmoInvoker (player, ammo)
         {
           var result = true;
-          if(ammo.player != player && player.lifes > 1 && ammo.collided)
+          if(ammo.player !== player && player.lifes > 1 && ammo.collided)
           {
             player.lifes -= 1;
             ammo.ignorePlayer = player;
@@ -193,8 +181,6 @@ function gameAccessable(options) {
             return result;
         }
 
-
-
         function muteSoundFx() {
 			for(let sound in soundFx)
 				soundFx[sound].mute = true;
@@ -208,7 +194,7 @@ function gameAccessable(options) {
         location.reload();
     }
 
-// Blendet das Ingame-Menü ein
+// Displays ingame menu
     document.onkeydown = function(evt) {
         evt = evt || window.event;
         if (evt.keyCode === 27) {
@@ -217,6 +203,7 @@ function gameAccessable(options) {
     };
 }
 
+// Unmute or mute sounds
 function changeMuteSoundFx() {
     for (let sound in soundFx){
         if (!soundFx[sound].mute)soundFx[sound].mute=true;
@@ -224,11 +211,13 @@ function changeMuteSoundFx() {
     }
 }
 
+// Unmute or mute music
 function changeMuteMusic() {
     if (!music.mute) music.mute = true;
     else music.mute = false;
 }
 
+// Restarts the game with same environments
 function restartGame() {
   gameOver = false;
   game.destroy(true);
