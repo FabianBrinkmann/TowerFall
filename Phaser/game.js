@@ -1,4 +1,5 @@
 var ammunition;
+var items;
 
 var music;
 var soundFx = {};
@@ -19,7 +20,7 @@ function gameAccessable(options) {
                 default: 'arcade',
                 arcade: {
                     gravity: { y: 300 },
-                    //debug: true
+                    debug: true
                 }
             },
             scene: {
@@ -47,8 +48,7 @@ function gameAccessable(options) {
         function preload ()
         {
             // map graphics
-            this.load.image('arrowUp', 'assets/arrowUp.png');
-            this.load.image('arrowDown', 'assets/arrowDown.png');
+            this.load.image('heart', 'assets/heart.png');
             this.load.image('arrowLeft', 'assets/arrowLeft.png');
             this.load.image('bulletLeft', 'assets/bulletLeft.png');
             this.load.image('arrowRight', 'assets/arrowRight.png');
@@ -113,6 +113,7 @@ function gameAccessable(options) {
 
             cursors = this.input.keyboard.createCursorKeys();
             ammunition = this.physics.add.group();
+            items = this.physics.add.group();
             var playerCursors = new Array(
                 new Array(cursors.left, cursors.right, cursors.up, cursors.space),//65 ist der Key von A
                 new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
@@ -127,28 +128,23 @@ function gameAccessable(options) {
                 playerList[i].cursorShoot= playerCursors[i][3];
                 this.physics.add.collider(playerList[i], platformLayer, null, collideInvokerPlayerPlatform, this);
                 this.physics.add.collider(playerList[i], groundLayer);
-                this.physics.add.collider(playerList[i], ammunition, hitAmmo, null, this);
+                this.physics.add.collider(playerList[i], ammunition, hitAmmo, collideAmmoInvoker, this);
                 this.physics.add.overlap(playerList[i], ammunition, hitAmmo, overlapAmmoInvoker, this);
+                this.physics.add.collider(playerList[i], items, hitItem, null, this);
+                this.physics.add.overlap(playerList[i], items, hitItem, null, this);
             }
-
+            this.physics.add.collider(items, groundLayer);
+            this.physics.add.collider(items, platformLayer);
             this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
             this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
-        }
-
-        function overlapAmmoInvoker (player, ammo)
-        {
-          var result = true;
-          if(ammo.player === player)
-          {
-            result = false;
-          }
-          return result;
+            setTimeout( () => {
+              spawnItem('heart', 525, 100);
+            }, 15000);
         }
 
         //Aktualisiert das Spiel
         function update (time, delta)
         {
-            //controls.update(delta);
             if (gameOver)
             {
                 music.mute=true;
@@ -161,6 +157,33 @@ function gameAccessable(options) {
             }
 
         }
+
+        function overlapAmmoInvoker (player, ammo)
+        {
+          var result = true;
+          if(ammo.player === player || ammo.ignorePlayer === player)
+          {
+            result = false;
+          }
+          return result;
+        }
+
+        function collideAmmoInvoker (player, ammo)
+        {
+          var result = true;
+          if(player.lifes > 1)
+          {
+            player.lifes -= 1;
+            ammo.ignorePlayer = player;
+            player.alpha = 1;
+          }
+          if(ammo.ignorePlayer === player)
+          {
+            result = false;
+          }
+          return result;
+        }
+
         function collideInvokerPlayerPlatform (player, tile) {
             //console.log(player);
             var result = true;

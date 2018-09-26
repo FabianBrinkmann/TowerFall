@@ -28,6 +28,7 @@ function shoot(shootingPlayer, direktion)
         ammo.colided = false;
         ammo.body.setGravity(0, 0);
         ammo.player = shootingPlayer;
+        ammo.ignorePlayer = null;
 
         switch (direktion)
         {
@@ -46,7 +47,7 @@ function justShotTimer(player){
         player.shootBlocked=true;
     setTimeout( () => {
         player.shootBlocked = false;
-    }, 500);
+    }, 200);
 }
 
 //Wird ausgelöst wenn eine Munition auf ein Tile trifft.
@@ -57,6 +58,7 @@ function ammoCollide(collidedAmmo, tile)
     collidedAmmo.setVelocity(0, 0);
     collidedAmmo.colided = true;
     collidedAmmo.body.allowGravity = false;
+    collidedAmmo.ignorePlayer = null;
 }
 
 //Wird ausgelöst wenn ein Spieler eine Munition berührt.
