@@ -83,5 +83,7 @@ function hitAmmo (player, ammo)
         player.anims.play('turn');
 
         gameOver = true;
+
+        toggleIngameMenu();
     }
 }

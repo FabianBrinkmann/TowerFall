@@ -198,7 +198,13 @@ function gameAccessable(options) {
     document.onkeydown = function(evt) {
         evt = evt || window.event;
         if (evt.keyCode === 27) {
-            toggleIngameMenu();
+            if (gameOver === false) {
+                toggleIngameMenu();
+            }
+        }
+
+        if (evt.keyCode === 82 && document.getElementById('ingame-overlay').style.display === 'flex') {
+            restartGame();
         }
     };
 }
@@ -222,4 +228,5 @@ function restartGame() {
   gameOver = false;
   game.destroy(true);
   gameAccessable(options);
+  toggleIngameMenu();
 }
