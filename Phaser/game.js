@@ -5,6 +5,7 @@ var soundFx = {};
 var groundLayer;
 var gameOver = false;
 var getScene;
+var game;
 
 function gameAccessable(options) {
     if(window.sessionStorage.getItem('token') != null) {
@@ -38,7 +39,7 @@ function gameAccessable(options) {
         //var ammunition;
 
 
-        var game = new Phaser.Game(config);
+        game = new Phaser.Game(config);
         var skyLayer;
         var platformLayer;
 
@@ -207,6 +208,7 @@ function changeMuteMusic() {
 }
 
 function restartGame() {
-    getScene();
+  gameOver = false;
+  game.destroy(true);
+  gameAccessable(options);
 }
-
