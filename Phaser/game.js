@@ -20,7 +20,6 @@ function gameAccessable(options) {
                 default: 'arcade',
                 arcade: {
                     gravity: { y: 300 },
-                    debug: true
                 }
             },
             scene: {
@@ -171,7 +170,7 @@ function gameAccessable(options) {
         function collideAmmoInvoker (player, ammo)
         {
           var result = true;
-          if(player.lifes > 1)
+          if(ammo.player != player && player.lifes > 1 && ammo.collided)
           {
             player.lifes -= 1;
             ammo.ignorePlayer = player;
