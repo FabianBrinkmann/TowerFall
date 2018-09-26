@@ -21,6 +21,7 @@ function createPlayer(game, playerOptions,  playerNumber) {
     player.setCollideWorldBounds(true);
     player.body.overlapY = 16;
     player.shootBlocked=false;
+    player.lifes = 1;
 
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
