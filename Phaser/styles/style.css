@@ -1,3 +1,4 @@
+/* Main styles */
 body {
     margin: 0;
     font-family: 'Oswald', sans-serif;
@@ -46,10 +47,6 @@ input {
     padding-left: 10px;
 }
 
-[type=submit] {
-
-}
-
 .registerToggle {
     width: 100%;
     text-align: center;
@@ -58,6 +55,8 @@ input {
     text-decoration: underline;
     cursor: pointer;
 }
+
+/* Main Menu */
 
 .menu-manager{
     font-size:2.4em;

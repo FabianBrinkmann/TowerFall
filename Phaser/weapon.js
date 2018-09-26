@@ -1,26 +1,24 @@
+// This file is used to handle ammunition
+// shootingPlayer = the player shoots
+// imageName = the image of the ammo being used
+// direction = shooting direction
 
-//Erstellt eine Munition und schießt sie ab.
-//shootingPlayer = der Spieler der schießt.
-//imageName = das Bild das für die Munition benutzt werden soll.
-//direktion = Die Richtung in die geschossen werden soll.
-function shoot(shootingPlayer, direktion)
+function shoot(shootingPlayer, direction)
 {
-    var imageName
+    var imageName;
 
     if(shootingPlayer.ammo > 0)
     {
-        if (shootingPlayer.options.character==="indian") {
-            imageName="arrow"+direktion;
+        if (shootingPlayer.options.character === "indian") {
+            imageName="arrow" + direction;
             soundFx.arrowShotSound.play();
-
-        }
-        else {
-            imageName = "bullet" + direktion;
+        } else {
+            imageName = "bullet" + direction;
             soundFx.bulletShotSound.play();
         }
 
 
-        shootingPlayer.ammo += - 1;
+        shootingPlayer.ammo += -1;
         var ammo = ammunition.create(16, 16, imageName);
         ammo.setBounce(0);
         ammo.setCollideWorldBounds(false);
@@ -30,7 +28,7 @@ function shoot(shootingPlayer, direktion)
         ammo.player = shootingPlayer;
         ammo.ignorePlayer = null;
 
-        switch (direktion)
+        switch (direction)
         {
             case 'Right':
                 ammo.setVelocity(500, -80);
@@ -43,16 +41,17 @@ function shoot(shootingPlayer, direktion)
     }
 }
 
+// Creates a short delay between every shot
 function justShotTimer(player){
-        player.shootBlocked=true;
+        player.shootBlocked = true;
     setTimeout( () => {
         player.shootBlocked = false;
     }, 200);
 }
 
-//Wird ausgelöst wenn eine Munition auf ein Tile trifft.
-//collidedAmmo = die Munition die die Platform trifft.
-//tile = der Tile der getroffen wurde.
+// Function being called when ammo collides with a tile
+// collidedAmmo = the ammunition colliding with the environment
+// tile = the tile being hit
 function ammoCollide(collidedAmmo, tile)
 {
     collidedAmmo.setVelocity(0, 0);
@@ -61,10 +60,12 @@ function ammoCollide(collidedAmmo, tile)
     collidedAmmo.ignorePlayer = null;
 }
 
-//Wird ausgelöst wenn ein Spieler eine Munition berührt.
-//Wenn der Pfeil noch in bewegung ist stirbt der Spieler und wenn er liegt sammelt er ihn auf.
-//player = der Spieler der die Munition berührt.
-//ammo = die Munition die den Spieler berührt.
+// Function being called when ammo collides with a player
+//
+// If the ammunition is this in the air, the enemy player gets hit
+// If it's laying on the ground, the ammo can be collected
+// player = the player colliding with ammo
+// ammo = the ammunition that is being touched
 function hitAmmo (player, ammo)
 {
     if(ammo.colided)
@@ -75,7 +76,6 @@ function hitAmmo (player, ammo)
     else
     {
         soundFx.hitSound.play();
-       // soundFx.gameOver.play();
         this.physics.pause();
 
         player.setTint(0xff0000);
@@ -83,5 +83,7 @@ function hitAmmo (player, ammo)
         player.anims.play('turn');
 
         gameOver = true;
+
+        toggleIngameMenu();
     }
 }

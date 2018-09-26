@@ -5,7 +5,7 @@ function createMenu() {
 	var manager = new MenuManager( startMenu.getMenues() );
 	manager.createHTML();
 	var elem = manager.getElement();
-	elem.id="start-menu";
+	elem.id = "start-menu";
 	elem.style.display = "none";
 	document.getElementById( "overlay" ).appendChild( elem );
 }
