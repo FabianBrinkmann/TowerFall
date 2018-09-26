@@ -48,6 +48,7 @@ function gameAccessable(options) {
         function preload ()
         {
             // map graphics
+            this.load.image('ammo', 'assets/ammo.png');
             this.load.image('heart', 'assets/heart.png');
             this.load.image('arrowLeft', 'assets/arrowLeft.png');
             this.load.image('bulletLeft', 'assets/bulletLeft.png');
@@ -137,9 +138,8 @@ function gameAccessable(options) {
             this.physics.add.collider(items, platformLayer);
             this.physics.add.collider(ammunition, groundLayer, ammoCollide, null, this);
             this.physics.add.collider(ammunition, platformLayer, ammoCollide, null, this);
-            setTimeout( () => {
-              spawnItem('heart', 525, 100);
-            }, 15000);
+            spawnItem('heart', 525, 100, 15000);
+            spawnItem('ammo', 100, 100, 30000);
         }
 
         //Aktualisiert das Spiel
