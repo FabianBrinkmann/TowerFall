@@ -5,6 +5,7 @@ var soundFx = {};
 var groundLayer;
 var gameOver = false;
 var getScene;
+var game;
 
 function gameAccessable(options) {
     if(window.sessionStorage.getItem('token') != null) {
@@ -38,7 +39,7 @@ function gameAccessable(options) {
         //var ammunition;
 
 
-        var game = new Phaser.Game(config);
+        game = new Phaser.Game(config);
         var skyLayer;
         var platformLayer;
 
@@ -57,10 +58,14 @@ function gameAccessable(options) {
                 key: 'map1',
                 url: 'assets/tilemaps/maps/TowerFall.json'
             });
-            this.load.tilemapTiledJSON({
+			this.load.tilemapTiledJSON({
 				key: 'map2',
 				url: 'assets/tilemaps/maps/TowerFall_2.json'
-			})
+			});
+			this.load.tilemapTiledJSON({
+				key: 'map3',
+				url: 'assets/tilemaps/maps/TowerFall_3.json'
+			});
             this.load.spritesheet('cowboy', 'assets/cowboy.png', { frameWidth: 30, frameHeight: 59 });
             this.load.spritesheet('indian', 'assets/indian.png', { frameWidth: 30, frameHeight: 59 });
 
@@ -203,6 +208,7 @@ function changeMuteMusic() {
 }
 
 function restartGame() {
-    getScene();
+  gameOver = false;
+  game.destroy(true);
+  gameAccessable(options);
 }
-
