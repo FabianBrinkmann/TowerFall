@@ -4,6 +4,11 @@ body {
     font-family: 'Oswald', sans-serif;
 }
 
+#wrapper {
+    width: 1050px;
+    margin: 0 auto;
+}
+
 #overlay, #ingame-overlay {
     position: absolute;
     width: 1050px;
