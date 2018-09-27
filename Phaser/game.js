@@ -164,7 +164,7 @@ function gameAccessable(options) {
         function collideAmmoInvoker (player, ammo)
         {
           var result = true;
-          if(ammo.player !== player && player.lifes > 1 && ammo.collided)
+          if(ammo.player !== player && player.lifes > 1 && !ammo.colided)
           {
             player.lifes -= 1;
             ammo.ignorePlayer = player;
