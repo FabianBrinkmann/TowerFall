@@ -5,11 +5,11 @@ function createPlayer(game, playerOptions,  playerNumber) {
     var character = playerOptions.character;
 
     if (playerNumber === 1) {
-        player = game.physics.add.sprite(200, 450, character);
+        player = game.physics.add.sprite(250, 450, character);
         player.right = true;
         player.left = false;
     } else {
-        player = game.physics.add.sprite(400, 450, character);
+        player = game.physics.add.sprite(800, 450, character);
         player.right = false;
         player.left = true;
     }
