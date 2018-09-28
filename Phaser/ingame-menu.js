@@ -1,3 +1,4 @@
+//toggles the in-game-menu
 function toggleIngameMenu() {
     const overlay = document.getElementById('ingame-overlay');
     if (overlay.style.display === 'none') {
@@ -7,6 +8,7 @@ function toggleIngameMenu() {
     }
 }
 
+//toggles the mute state of music and a forbidden sign on top of the music button.
 function muteMusic() {
     changeMuteMusic();
     const muteSymbol = document.getElementById('music-muted');
@@ -17,6 +19,7 @@ function muteMusic() {
     }
 }
 
+//toggles the mute state of soundFx and a forbidden sign on top of the soundFx button.
 function muteSound() {
     changeMuteSoundFx();
     const muteSymbol = document.getElementById('sound-muted');
@@ -27,6 +30,7 @@ function muteSound() {
     }
 }
 
+//restarts the game
 function rematch() {
     restartGame();
 }
