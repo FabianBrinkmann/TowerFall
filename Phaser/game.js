@@ -98,10 +98,10 @@ function gameAccessable(options) {
 
 
             if(!options.musicEnabled)
-            	muteMusic();
+            	changeMuteMusic();
 
             if(!options.soundEnabled)
-            	muteSoundFx();
+            	changeMuteSoundFx();
 
             music.play();
 
@@ -185,15 +185,6 @@ function gameAccessable(options) {
             }
             return result;
         }
-
-        function muteSoundFx() {
-			for(let sound in soundFx)
-				soundFx[sound].mute = true;
-		}
-
-		function muteMusic() {
-			music.mute = true;
-		}
 
     } else {
         location.reload();
