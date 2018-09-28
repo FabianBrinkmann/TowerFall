@@ -113,6 +113,11 @@ SelectMenuItem.prototype._changeLeft = function() {
 	this.fnOnChange( this.options[ this.nCurrentOption ].value );
 };
 
+/**
+ * Changes current item left or right
+ * @param keyEvent
+ * @return {boolean}
+ */
 SelectMenuItem.prototype.onKeyPressed = function( keyEvent ) {
 	var key = keyEvent.keyCode ? keyEvent.keyCode : keyEvent.which;
 	switch ( key ) {
@@ -127,6 +132,9 @@ SelectMenuItem.prototype.onKeyPressed = function( keyEvent ) {
 
 };
 
+/**
+ * Creates the HTML for the item
+ */
 SelectMenuItem.prototype.createHTML = function() {
 	var left = document.createElement( "div" );
 	left.classList.add( "option-name" );
@@ -229,19 +237,33 @@ var ActionMenuItem = function( menu, text, fnAction ) {
 	this.DOMElem.onclick = fnAction;
 };
 
+/**
+ * Executes the action given in constructor
+ * @param event
+ */
 ActionMenuItem.prototype.onClick = function( event ) {
 	this.action();
 };
 
 inherit( ActionMenuItem, MenuItem );
 
-
+/**
+ * MenuItem to put text in
+ * @param menu The menu the item belongs to
+ * @param text Text of the option
+ * @param fnOnChange Function to call when value is changed
+ * @param strDefault Default value for input
+ * @constructor
+ */
 var TextInputMenuItem = function( menu, text, fnOnChange, strDefault ) {
 	this.superClass.constructor.call( this, menu, text );
 	this.fnOnChange = fnOnChange;
 	this.defaultValue = strDefault;
 };
 
+/**
+ * Creates the elements
+ */
 TextInputMenuItem.prototype.createHTML = function() {
 	var left = document.createElement( "div" );
 	left.classList.add( "option-name" );
@@ -261,6 +283,10 @@ TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
 	//this.fnOnChange( this.right.value );
 };
 
+/**
+ * Calls fnOnChange when input-value is changed
+ * @param keyEvent
+ */
 TextInputMenuItem.prototype.onKeyUp = function( keyEvent ) {
 	this.fnOnChange( this.right.value );
 }
