@@ -108,6 +108,8 @@ function gameAccessable(options) {
             cursors = this.input.keyboard.createCursorKeys();
             ammunition = this.physics.add.group();
             items = this.physics.add.group();
+
+            // Sets keys to player controls
             var playerCursors = new Array(
                 new Array(cursors.left, cursors.right, cursors.up, cursors.space),//65 ist der Key von A
                 new Array(this.input.keyboard.addKey(65), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W), this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))
@@ -163,6 +165,8 @@ function gameAccessable(options) {
 
         }
 
+        // Checks if the corresponding event shell be executed
+        // Denies the projectile to kill the player that shot the projectile
         function overlapAmmoInvoker (player, ammo)
         {
           var result = true;
@@ -173,6 +177,8 @@ function gameAccessable(options) {
           return result;
         }
 
+        // Checks if the corresponding event shell be executed
+        // Checks if a player can be hit by a projectile
         function collideAmmoInvoker (player, ammo)
         {
           var result = true;
@@ -189,6 +195,8 @@ function gameAccessable(options) {
           return result;
         }
 
+        // Checks if the corresponding event shell be executed
+        // Enables to jump through platforms
         function collideInvokerPlayerPlatform (player, tile) {
             var result = true;
             if (player.body.velocity.y < 0)
