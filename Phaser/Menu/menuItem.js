@@ -279,9 +279,6 @@ TextInputMenuItem.prototype.createHTML = function() {
 	this.fnOnChange( this.right.value );
 };
 
-TextInputMenuItem.prototype.onKeyPressed = function( keyEvent ) {
-	//this.fnOnChange( this.right.value );
-};
 
 /**
  * Calls fnOnChange when input-value is changed

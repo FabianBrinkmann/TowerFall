@@ -22,7 +22,6 @@ var StartMenu = function() {
 	var startItem = new ActionMenuItem( this.rootMenu, "Start", () => {
 		window.localStorage.setItem( "options", JSON.stringify( this.getOptions() ) );
 		document.getElementById( "overlay" ).style.display = "none";
-		console.log( this.getOptions() );
 		options = this.options;
 		gameAccessable( this.getOptions() );
 	} );
