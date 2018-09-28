@@ -142,23 +142,11 @@ function gameAccessable(options) {
         // Updates the game continuously
         function update (time, delta)
         {
-            toggleMuteSigns();
-            const musicButton = document.getElementById('music-button');
-            const soundButton = document.getElementById('sound-fx-button');
-
-            // if game is over prevent updating the players and set display none on the music and sound button.
             if (gameOver)
             {
-                musicButton.style.display = 'none';
-                soundButton.style.display = 'none';
                 music.mute = true;
-                return;
-            } else {
-                musicButton.style.display = 'block';
-                soundButton.style.display = 'block';
+                return
             }
-
-            // updates the players
             for (var i = 0; i < playerList.length; i++) {
                 updatePlayer(playerList[i]);
             }
