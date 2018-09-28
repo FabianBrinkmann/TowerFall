@@ -15,6 +15,10 @@ var Menu = function( parentMenu ) {
 	this.totalItems = 0;
 }
 
+/**
+ * builds the DOM Element
+ * @private
+ */
 Menu.prototype._buildDOMElem = function() {
 	this.DOMElem = document.createElement( "div" );
 	this.DOMElem.setAttribute( "tabindex", '0' ); //needed for keyevents
@@ -128,6 +132,10 @@ Menu.prototype.enter = function() {
 	this.getCurrentItem().onClick();
 }
 
+/**
+ * Returns the currently selected item
+ * @return {MenuItem}
+ */
 Menu.prototype.getCurrentItem = function() {
 	return this.menuItems[ this.currentItem ];
 }

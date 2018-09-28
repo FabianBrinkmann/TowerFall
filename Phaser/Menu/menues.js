@@ -1,4 +1,9 @@
 var options;
+
+/**
+ * Class for Startmenu. Puts in the used menus and items
+ * @constructor
+ */
 var StartMenu = function() {
 
 	this.options = JSON.parse( window.localStorage.getItem( "options" ) ) ||
@@ -72,6 +77,9 @@ StartMenu.prototype.getMenues = function() {
 	return [ this.rootMenu, this.optionsMenu, this.optionsPlOne.getMenu(), this.optionsPlTwo.getMenu() ];
 }
 
+/**
+ * Returns the options
+ */
 StartMenu.prototype.getOptions = function() {
 	this.options.players = [
 		this.optionsPlOne.getOptions(),
@@ -80,6 +88,12 @@ StartMenu.prototype.getOptions = function() {
 	return this.options;
 }
 
+/**
+ * Optionsmenu for a player
+ * @param parentMenu
+ * @param objDefaults
+ * @constructor
+ */
 var PlayerMenu = function( parentMenu, objDefaults ) {
 	this.options = objDefaults;
 	this.optionsMenu = new Menu( parentMenu );
